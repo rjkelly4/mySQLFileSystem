@@ -60,7 +60,7 @@ Rev. 1.0.1 \<2023-10-10>: Convert to .md format
     - The following are hosted in Team 04 CSL machine running Ubuntu 22.04 LTS 
         - Backend: Java
         - Front End: JavaScript, React, HTML, CSS
-        -  Minimum Server Specs: JDK 19, 2 CPU Cores, 2 GB RAM 
+        - Minimum Server Specs: JDK 19, 2 CPU Cores, 2 GB RAM 
     - Database: MySQL Docker Container
         - Docker Container
         - Minimum Server Specs: 2 CPU cores, 2 GB RAM, 40 GB Disk Space 
@@ -97,292 +97,68 @@ Rev. 1.0.1 \<2023-10-10>: Convert to .md format
 
 # Use Cases
 
-[//]: # (This is in auto-parsed HTML format for convenience sake - new tables should probably be written in markdown format!)
+[//]: # (Converted to markdown format 10/17 - Alex M)
 
-<table>
-  <tr>
-   <td> Name
-   </td>
-   <td>Create file
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Web clients
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Clicking on “create/add” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>Users are able to add information about their file, as well as the file
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>File and all info fields are correctly filled out.
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>File is part of file tree, and can be viewed/accessed.
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>File is now in file system
-   </td>
-  </tr>
-</table>
+| Name              | Create file                                                             |
+|-------------------|-------------------------------------------------------------------------|
+| Actors            | Web clients                                                             |
+| Triggers          | Clicking on “create/add” button                                         |
+| Events            | Users are able to add information about their file, as well as the file |
+| Exit Conditions   | File and all info fields are correctly filled out.                      |
+| Post-Conditions   | File is part of the file tree and can be viewed/accessed.               |
+| Acceptance Test   | File is now in the file system                                          |
 
-</br>
-</br>
+<br>
 
-<table>
-  <tr>
-   <td>Name
-   </td>
-   <td>User log in
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Web clients
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Click “log in” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>Username and password is valid
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>Users are able to access their file system, as well as any relevant options 
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>User is logged in.
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>User can log in, access correct filesystems and permissions
-   </td>
-  </tr>
-</table>
+| Name              | User log in                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| Actors            | Web clients                                                                 |
+| Triggers          | Click “log in” button                                                       |
+| Events            | Username and password are valid                                             |
+| Exit Conditions   | Users are able to access their file system, as well as any relevant options |
+| Post-Conditions   | User is logged in.                                                          |
+| Acceptance Test   | User can log in, access the correct file systems and permissions            |
 
-</br>
-</br>
+<br>
 
-<table>
-  <tr>
-   <td>Name
-   </td>
-   <td>Visualize directory or sub-directory
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Web clients
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Clicking on “view directory” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>Directory is displayed graphically to user
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>User is attempting to access directory that they have permission to view
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>Visualization of directory is shown to user
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>Directory/files are correct and displayed in the correct order.
-   </td>
-  </tr>
-</table>
+| Name              | Visualize directory or sub-directory                                  |
+|-------------------|-----------------------------------------------------------------------|
+| Actors            | Web clients                                                           |
+| Triggers          | Clicking on “view directory” button                                   |
+| Events            | Directory is displayed graphically to the user                        |
+| Exit Conditions   | User is attempting to access a directory they have permission to view |
+| Post-Conditions   | Visualization of the directory is shown to the user                   |
+| Acceptance Test   | Directory/files are correct and displayed in the correct order        |
 
-</br>
-</br>
+<br>
 
-<table>
-  <tr>
-   <td>Name
-   </td>
-   <td>Delete file
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Web clients
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Clicking on “delete” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>File is removed from filesystem, space is recognized as free, user can no longer see info about file.
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>Delete button is pressed and confirmed by user.
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>File is no longer in file system, and system recognizes the space as free.
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>File and its information is no longer in file system.
-   </td>
-  </tr>
-</table>
+| Name              | Delete file                                                                                                   |
+|-------------------|---------------------------------------------------------------------------------------------------------------|
+| Actors            | Web clients                                                                                                   |
+| Triggers          | Clicking on “delete” button                                                                                   |
+| Events            | File is removed from the filesystem, space is recognized as free, user can no longer see info about the file. |
+| Exit Conditions   | Delete button is pressed and confirmed by the user.                                                           |
+| Post-Conditions   | File is no longer in the file system, and the system recognizes the space as free.                            |
+| Acceptance Test   | File and its information are no longer in the file system.                                                    |
 
-</br>
-</br>
+<br>
 
-<table>
-  <tr>
-   <td>Name
-   </td>
-   <td>Modify permissions
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Administrators
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Interacting with permissions menu/”save” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>User permissions are modified
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>Each user has permissions filled out.
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>User permissions are modified.
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>Users can access what they have permissions for, and are denied access for rest of system.
-   </td>
-  </tr>
-</table>
+| Name              | Modify permissions                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| Actors            | Administrators                                                                                    |
+| Triggers          | Interacting with permissions menu/"save" button                                                   |
+| Events            | User permissions are modified                                                                     |
+| Exit Conditions   | Each user has permissions filled out.                                                             |
+| Post-Conditions   | User permissions are modified.                                                                    |
+| Acceptance Test   | Users can access what they have permissions for and are denied access for the rest of the system. |
 
-</br>
-</br>
+<br>
 
-<table>
-  <tr>
-   <td>Name
-   </td>
-   <td>Create Directory
-   </td>
-  </tr>
-  <tr>
-   <td>Actors
-   </td>
-   <td>Web clients
-   </td>
-  </tr>
-  <tr>
-   <td>Triggers
-   </td>
-   <td>Interacting with a “create directory” button
-   </td>
-  </tr>
-  <tr>
-   <td>Events
-   </td>
-   <td>Creates a new directory or subdirectory
-   </td>
-  </tr>
-  <tr>
-   <td>Exit Conditions
-   </td>
-   <td>Users are able create new directory or subdirectories
-   </td>
-  </tr>
-  <tr>
-   <td>Post-Conditions
-   </td>
-   <td>Directories are created 
-   </td>
-  </tr>
-  <tr>
-   <td>Acceptance Test
-   </td>
-   <td>User can create new directories and subdirectories within the system
-   </td>
-  </tr>
-</table>
-
-</br>
-</br>
+| Name            | Create Directory                                                     |
+|-----------------|----------------------------------------------------------------------|
+| Actors          | Web clients                                                          |
+| Triggers        | Interacting with a “create directory” button                         |
+| Events          | Creates a new directory or subdirectory                              |
+| Exit Conditions | Users are able to create new directories or subdirectories           |
+| Post-Conditions | Directories are created                                              |
+| Acceptance Test | User can create new directories and subdirectories within the system |
