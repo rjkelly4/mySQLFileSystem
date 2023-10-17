@@ -43,11 +43,9 @@ Rev. 1.0.1 \<2023-10-10>: Convert to .md format
 
 # Security Requirements
 
-
-
 - One role with different levels of permissions: User
-- User authentication and authorization are managed by Duo, which makes use of MFA
-- Uses a mobile device with Duo App to receive push notifications
+- User authentication will be provided by the NetID login service
+- 2FA provided through the NetID login using Duo MFA app
     - Can also use a fob to generate a passcode
 - User has access to their file system and only theirs unless sharing permissions are authorized by another user
 
