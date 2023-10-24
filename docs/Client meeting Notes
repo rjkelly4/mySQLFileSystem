@@ -1,0 +1,61 @@
+# User Registration Process
+- How do you envision the user registration process? Are there any specific user details that need to be captured during registration?
+  - Username and password (Standard password)
+  - Must be an admin that can provide access to everyone
+  - Admin has all permissions
+
+# User Roles and Permissions
+- Can you elaborate on the different user roles and their respective permissions within the system?
+  - Admin: all permissions
+  - Reading permission
+  - Create permission
+  - Edit permission
+
+# File Upload Constraints
+- Are there any constraints on the file types that can be uploaded?
+  - Text files only
+
+# File Modification and Conflict Resolution
+- Regarding file modification, what versioning system should be in place (if any)?
+- How should conflicts be handled if two users attempt to modify the same file simultaneously?
+  - Not needed, if we can add it
+  - Whoever saves it most recently
+  - Restrict it by person
+
+# User Interface Design
+- What is the preferred layout or design for the user interface? Do you have any design preferences or inspirations you'd like to share?
+- Are there any specific accessibility requirements for the user interface, such as support for screen readers or keyboard navigation?
+  - No preference, have to visualize the tree
+  - Same as how we view folders in a local machine
+
+# Tree Structure Visualization
+- Do you have any preferences for how the tree structure visualization should be displayed? (e.g., expandable nodes, color-coded categories)
+  - Not necessary for the MVP, but can add it on
+
+# File Manipulation Features
+- For features like moving, copying, cutting, and pasting files, how would you like the user interaction to be? (e.g., drag-and-drop, context menu options)
+  - Drag-and-drop
+  - Right-click menu
+  - Drop down
+
+# Trash Folder Functionality
+- Regarding the trash folder functionality, how long should deleted files be retained before permanent deletion?
+  - Either works: restrict deletes or keep deleted copy someplace
+  - Once they close, should not be accessed again
+  - Every few seconds check if it exists in the DB - close window
+
+# Error Handling and Logging
+- How should the system handle errors, such as failed file uploads or database connectivity issues?
+- Are there specific error messages or codes that users should see when an operation fails?
+  - Error handling is a must
+  - No preference on how to display errors
+  - Check for compatible file formats
+
+- Should there be a logging system to track errors and user activities within the application?
+  - Up to us, be able to log security errors and permissions
+
+# Authentication
+- Authentication question
+  - Using Database hashing and encryption
+  - DUO probably won't be needed if we have our own verification
+  - Verification email?
