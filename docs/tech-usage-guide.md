@@ -51,3 +51,16 @@ Example 3:
 3. The bugfix is implemented and the `fix/23` branch receives regular commits with messages describing changes as they occur.
 4. The bugfix is completed and a PR is created. The PR is titled `fix(23): Files now delete instead of go to trash`.
 5. The branch is squash merged into `main`. Viewing the git log reveals one commit, `fix(23): Files now delete instead of go to trash`
+
+Code Review Table:
+When requesting a code review, reference this table to see who can help support you.
+
+| Persons | prefers    | Java | JS | React |
+|:--------|:-----------|:----:|:---:|:----:|
+| Matthew |  fullstack | yes  | yes | no   |
+| Khai    |  fullstack | yes  | yes | yes  |
+| Eligh   |  frontend  | yes  | yes | yes  |
+| Ryan    |  backend   | yes  | no  | no   |
+| Alex    |  backend   | yes  | no  | no   |
+| Delan   |  backend   | yes  | no  | no   |
+
