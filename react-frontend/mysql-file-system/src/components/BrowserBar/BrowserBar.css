@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    display: grid;
+    grid-template-columns: 1fr 1vw 75px
+}
+
+.barContainer {
+    width: 100%;
+    grid-column: 1 / 2;
+}
+
+.buttonContainer {
+    width: 100%;
+    grid-column: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
