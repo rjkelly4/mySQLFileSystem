@@ -8,8 +8,8 @@ CREATE TABLE Directory
         CAST(permission AS CHAR(3)) REGEXP '^[0-7]{1,3}$'
     ),
     ownerUserId INT NOT NULL,
-    ownerGroupId INT,
-    size BIGINT CHECK (size >= 0),
+    ownerGroupId INT NOT NULL,
+    size BIGINT CHECK (size >= 0) NOT NULL,
     FOREIGN KEY (parentDirId) REFERENCES Directory(id)
 );
 
@@ -23,9 +23,9 @@ CREATE TABLE File
         CAST(permission AS CHAR(3)) REGEXP '^[0-7]{1,3}$'
     ),
     ownerUserId INT NOT NULL,
-    ownerGroupId INT,
-    size BIGINT CHECK (size >= 0),
-    fileType ENUM('NONE', 'TXT'),
+    ownerGroupId INT NOT NULL ,
+    size BIGINT CHECK (size >= 0) NOT NULL,
+    fileType ENUM('NONE', 'TXT') NOT NULL,
     content VARCHAR(255),
     FOREIGN KEY (parentDirId) REFERENCES Directory(id)
 );
