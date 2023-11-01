@@ -175,3 +175,4 @@ target
 /scratch
 README.html
 .exercism
+*.properties
