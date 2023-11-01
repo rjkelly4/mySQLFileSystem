@@ -1,31 +1,33 @@
 package com.mysqlfsbackend.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+import java.util.UUID;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "File")
 public class FileEntity {
-    private final String id;
+    @Id
+    private UUID id;
     private String name;
-    private String parentDirId;
+    private UUID parentDirId;
     private Integer permission;
-    private String ownerUserId;
-    private String ownerGroupId;
+    private Integer ownerUserId;
+    private Integer ownerGroupId;
     private Integer size;
-    private FileTypes fileType;
-    private String content;
 
-    public FileEntity(String id, String name, String parentDirId, Integer permission,
-                      String ownerUserId, String ownerGroupId, Integer size, FileTypes fileType, String content) {
-        this.id = id;
-        this.name = name;
-        this.parentDirId = parentDirId;
-        this.permission = permission;
-        this.ownerUserId = ownerUserId;
-        this.ownerGroupId = ownerGroupId;
-        this.size = size;
-        this.fileType = fileType;
-        this.content = content;
-    }
+    @Enumerated(EnumType.STRING)
+    private FileTypes fileType;
+
+    private String content;
 }
