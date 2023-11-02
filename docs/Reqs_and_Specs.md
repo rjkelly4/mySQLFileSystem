@@ -46,9 +46,9 @@ Rev. 1.0.1 \<2023-10-10>: Convert to .md format
 
 
 - One role with different levels of permissions: User
-- User authentication and authorization are managed by Duo, which makes use of MFA
-- Uses a mobile device with Duo App to receive push notifications
-    - Can also use a fob to generate a passcode
+- User authentication and authorization are managed by email verification
+    - there are multiple free API's that offer email verification based on how many requests are made 
+    - exploring options to decide which API would be most effective for demo purposes
 - User has access to their file system and only theirs unless sharing permissions are authorized by another user
 
 
