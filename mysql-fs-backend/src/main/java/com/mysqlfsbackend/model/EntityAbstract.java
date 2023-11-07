@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import lombok.Data;
  * @see com.mysqlfsbackend.model.EntityDirectory
  */
 @Data
+//@MappedSuperclass
 public abstract class EntityAbstract {
     @Id UUID id;
     String name;
@@ -24,14 +26,4 @@ public abstract class EntityAbstract {
     Integer ownerGroupId;
     Integer size;
     Connection databaseCxn;
-
-    abstract void get();
-    
-    abstract void delete();
-
-    abstract ResultSet read();
-
-    abstract UUID post();
-
-    abstract void put() throws SQLException;
 }
