@@ -15,9 +15,8 @@ import lombok.Data;
  * @see com.mysqlfsbackend.model.EntityDirectory
  */
 @Data
-public abstract class Entity {
-    @Id
-    UUID id;
+public abstract class EntityAbstract {
+    @Id UUID id;
     String name;
     UUID parentDirId;
     Integer permission;
