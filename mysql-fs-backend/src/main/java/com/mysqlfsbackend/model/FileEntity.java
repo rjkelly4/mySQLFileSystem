@@ -20,7 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "File")
-public class FileEntity extends com.mysqlfsbackend.model.Entity{
+public class FileEntity extends com.mysqlfsbackend.model.EntityAbstract{
 
     @Enumerated(EnumType.STRING)
     private FileTypes fileType;
