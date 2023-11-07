@@ -11,7 +11,13 @@ import org.springframework.stereotype.Repository;
 public interface EntityDao extends JpaRepository<Entity, UUID> {
     Entity getRoot();
 
-    Entity getChildByName();
+    Entity getChildById(UUID id);
 
-    List<Entity> getAll();
+    Iterable<Entity> getAll();
+
+    long count();
+
+    void delete (Entity entity);
+
+    boolean existsById(UUID id);
 }
