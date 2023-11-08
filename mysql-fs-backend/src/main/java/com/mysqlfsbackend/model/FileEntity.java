@@ -27,7 +27,6 @@ public class FileEntity extends com.mysqlfsbackend.model.EntityAbstract{
 
     private String content;
 
-    @Override
     void get() {
         String query = "SELECT * FROM directories WHERE id = ?";
 
@@ -49,7 +48,6 @@ public class FileEntity extends com.mysqlfsbackend.model.EntityAbstract{
         }
     }
 
-    @Override
     void delete() {
         if (this.getId() == null) {
             return;
@@ -75,13 +73,11 @@ public class FileEntity extends com.mysqlfsbackend.model.EntityAbstract{
         this.setOwnerGroupId(null);
     }
 
-    @Override
     ResultSet read() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'read'");
     }
 
-    @Override
     UUID post() {
         //TODO use PreparedStatement to return generated primary key
         // Parse current fields into string that can be read as INSERT statement
@@ -161,7 +157,6 @@ public class FileEntity extends com.mysqlfsbackend.model.EntityAbstract{
         return this.getId();
     }
 
-    @Override
     void put() throws SQLException {
         String updateName =
         "UPDATE directories SET name = ? where id = ?";

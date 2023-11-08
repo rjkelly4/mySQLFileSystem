@@ -181,7 +181,6 @@ public class EntityDirectory extends EntityAbstract{
      * @throws NoSuchElementException if there is no matching entry found for the primary key.
      * @throws NullPointerException If this object's primary key is null.
      */
-    @Override
     public void get() throws NoSuchElementException, NullPointerException {
         //TODO split this method into load() and read()
 
@@ -216,7 +215,6 @@ public class EntityDirectory extends EntityAbstract{
      * Removes the corresponding row in the SQL table via primary key, and clears this EntityDirectory
      * object.
      */
-    @Override
     public void delete() {
         // If this.id != null:
         //      Call delete()
@@ -252,7 +250,6 @@ public class EntityDirectory extends EntityAbstract{
     /**
      * Creates a new row in the directories table using the information in this EntityDirectory object.
      */
-    @Override
     public UUID post() {
         //TODO use PreparedStatement to return generated primary key
         // Parse current fields into string that can be read as INSERT statement
@@ -339,7 +336,6 @@ public class EntityDirectory extends EntityAbstract{
      * @return a ResultSet containing the data from the database.
      * @throws NullPointerException if this object's primary key is null.
      */
-    @Override
     public ResultSet read() throws NullPointerException{
         // Assert that the primary key to search for is not NULL
         //      If so, throws a NullPointerException
@@ -358,7 +354,6 @@ public class EntityDirectory extends EntityAbstract{
      *
      * @throws SQLException if the database fails to update with this EntityDirectory's fields
      */
-    @Override
     public void put() throws SQLException {
         //Parse fields into String for SQL UPDATE statement
         String updateName =
