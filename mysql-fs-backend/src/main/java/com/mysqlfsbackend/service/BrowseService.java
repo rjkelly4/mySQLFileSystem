@@ -129,8 +129,7 @@ public class BrowseService {
 
             parentDirIds = childDirectories
                     .stream()
-                    .filter(fsObject -> fsObject instanceof DirectoryEntity)
-                    .map(directory -> directory.getId())
+                    .map(FileSystemObject::getId)
                     .toList();
         }
 
