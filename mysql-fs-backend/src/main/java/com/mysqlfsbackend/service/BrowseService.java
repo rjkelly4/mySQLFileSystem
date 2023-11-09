@@ -1,12 +1,15 @@
 package com.mysqlfsbackend.service;
 
-import com.mysqlfsbackend.model.DirectoryEntity;
-import com.mysqlfsbackend.model.FileEntity;
+import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import com.mysqlfsbackend.model.filesystem.FileEntity;
+import com.mysqlfsbackend.model.filesystem.FileSystemObject;
 import com.mysqlfsbackend.repository.DirectoryDao;
 import com.mysqlfsbackend.repository.FileDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +62,9 @@ public class BrowseService {
 
         for (String directory : path) {
             currDirectory = directoryDao.getChildByName(currDirectory.getId(), directory);
+            if (currDirectory == null) {
+                break;
+            }
         }
 
         return Optional.ofNullable(currDirectory);
@@ -89,5 +95,45 @@ public class BrowseService {
         FileEntity targetFile = fileDao.getChildByName(currDirectory.get().getId(), fileName);
 
         return Optional.ofNullable(targetFile);
+    }
+
+    /**
+     * Fetch the current working directory's contents layer-by-layer upto a given depth.
+     *
+     * @param workingDirectory The current working directory for browsing.
+     * @param browseDepth The depth of the content that will be browsed.
+     * @return A List of content layers, where each is a List of file system objects in that layer.
+     */
+    public List<List<FileSystemObject>> browseDirectory(DirectoryEntity workingDirectory, Integer browseDepth) {
+        List<List<FileSystemObject>> browseResults = new ArrayList<>();
+
+        List<String> parentDirIds = new ArrayList<>(Collections.singleton(workingDirectory.getId()));;
+
+        for (int depth = 0; depth <= browseDepth - 1; ++depth) {
+            List<FileSystemObject> childDirectories = directoryDao.getOrderedChildLayer(parentDirIds)
+                    .stream()
+                    .map(directory -> (FileSystemObject) directory)
+                    .toList();
+            List<FileSystemObject> childFiles = fileDao.getOrderedChildLayer(parentDirIds)
+                    .stream()
+                    .map(file -> (FileSystemObject) file)
+                    .toList();
+
+            browseResults.add(new ArrayList<>());
+            browseResults.get(depth).addAll(childDirectories);
+            browseResults.get(depth).addAll(childFiles);
+
+            if (childDirectories.isEmpty()) {
+                break;
+            }
+
+            parentDirIds = childDirectories
+                    .stream()
+                    .filter(fsObject -> fsObject instanceof DirectoryEntity)
+                    .map(directory -> directory.getId())
+                    .toList();
+        }
+
+        return browseResults;
     }
 }
