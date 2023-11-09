@@ -14,13 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "Directory")
-public class DirectoryEntity {
-    @Id
-    private UUID id;
-    private String name;
-    private UUID parentDirId;
-    private Integer permission;
-    private Integer ownerUserId;
-    private Integer ownerGroupId;
-    private Integer size;
+public class DirectoryEntity extends EntityAbstract{
+
 }
