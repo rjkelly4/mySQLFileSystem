@@ -5,14 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 //Replace CRUD names with Restful names
-public class EntityDirectory {
-
-    private UUID                id; // primary key
-    private String              name; // name of directory
-    private Integer             parentDir; // value of parent directory's primary key
-    private Integer             permission; // integer representation of permissions
-    private Integer             ownerUserId; // user's id value
-    private Integer             ownerGroupId; // group's id value
+public class EntityDirectory extends EntityAbstract{
 
     //TODO the inclusion of both of these may be redundant
     private JDBCConnectionMaker jdbcConnectionMaker;
@@ -65,7 +58,7 @@ public class EntityDirectory {
      * Sets the primary key. CAUTION: this can corrupt the data structure if used incorrectly.
      * @param id: the new primary key.
      */
-    protected void setId(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -96,8 +89,8 @@ public class EntityDirectory {
      * Note: This value may be different from what is contained
      * within the database.
      */
-    public Integer getParentDir() {
-        return parentDir;
+    public UUID getParentDirId() {
+        return parentDirId;
     }
 
     /**
@@ -107,8 +100,8 @@ public class EntityDirectory {
      * @param parentDir: The foreign key of the new parent directory.
      * @see this.save()
      */
-    public void setParentDir(Integer parentDir) {
-        this.parentDir = parentDir;
+    public void setParentDirId(UUID parentDir) {
+        this.parentDirId = parentDir;
     }
 
     /**
@@ -203,7 +196,7 @@ public class EntityDirectory {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 this.setName(rs.getString("name"));
-                this.setParentDir(rs.getInt("parent_dir"));
+                this.setParentDirId((UUID) rs.getObject("parent_dir"));
                 this.setPermission(rs.getInt("permission"));
                 this.setOwnerUserId(rs.getInt("owner_user_id"));
                 this.setOwnerGroupId(rs.getInt("owner_group_id"));
@@ -241,7 +234,7 @@ public class EntityDirectory {
         // Set all fields for this object to null
         this.setId(null);
         this.setName(null);
-        this.setParentDir(null);
+        this.setParentDirId((UUID) null);
         this.setPermission(null);
         this.setOwnerUserId(null);
         this.setOwnerGroupId(null);
@@ -253,7 +246,7 @@ public class EntityDirectory {
     /**
      * Creates a new row in the directories table using the information in this EntityDirectory object.
      */
-    private UUID post() {
+    public UUID post() {
         //TODO use PreparedStatement to return generated primary key
         // Parse current fields into string that can be read as INSERT statement
         String createRow =
@@ -264,8 +257,8 @@ public class EntityDirectory {
                     createRow, Statement.RETURN_GENERATED_KEYS)) {
             this.databaseCxn.setAutoCommit(false);
             createRowStatement.setString(1, this.getName());
-            if (this.getParentDir() != null) {
-                createRowStatement.setInt(2, this.getParentDir());
+            if (this.getParentDirId() != null) {
+                createRowStatement.setObject(2, this.getParentDirId());
             } else createRowStatement.setNull(2, 4);
             if (this.getPermission() != null) {
                 createRowStatement.setInt(3, this.getPermission());
@@ -305,7 +298,7 @@ public class EntityDirectory {
 
         try (PreparedStatement stmt = this.getDatabaseCxn().prepareStatement(query)) {
             stmt.setString(1, this.getName());
-            stmt.setInt(2, this.getParentDir());
+            stmt.setObject(2, this.getParentDirId());
             stmt.setInt(3, this.getPermission());
             stmt.setInt(4, this.getOwnerUserId());
             stmt.setInt(5, this.getOwnerUserId());
@@ -316,10 +309,10 @@ public class EntityDirectory {
             while (rs.next()) {
                 this.setId((UUID) rs.getObject("id"));
                 this.setName(rs.getString("name"));
-                this.setParentDir(rs.getInt("parent_directory"));
-                this.setParentDir(rs.getInt("permission"));
-                this.setParentDir(rs.getInt("owner_user_id"));
-                this.setParentDir(rs.getInt("owner_group_id"));
+                this.setParentDirId((UUID) rs.getObject("parent_directory"));
+                this.setPermission(rs.getInt("permission"));
+                this.setOwnerUserId(rs.getInt("owner_user_id"));
+                this.setOwnerGroupId(rs.getInt("owner_group_id"));
             }
         } catch (SQLException e) {
             System.out.println(e.toString());;
@@ -339,7 +332,7 @@ public class EntityDirectory {
      * @return a ResultSet containing the data from the database.
      * @throws NullPointerException if this object's primary key is null.
      */
-    private ResultSet read() throws NullPointerException{
+    public ResultSet read() throws NullPointerException{
         // Assert that the primary key to search for is not NULL
         //      If so, throws a NullPointerException
         if (this.getId() == null) throw new NullPointerException();
@@ -357,7 +350,7 @@ public class EntityDirectory {
      *
      * @throws SQLException if the database fails to update with this EntityDirectory's fields
      */
-    private void put() throws SQLException {
+    public void put() throws SQLException {
         //Parse fields into String for SQL UPDATE statement
         String updateName =
         "UPDATE directories SET name = ? where id = ?";
@@ -368,12 +361,12 @@ public class EntityDirectory {
             PreparedStatement updateParentDirStatement = this.getDatabaseCxn().prepareStatement(updateParentDir)) {
                 /*TODO add in the rest of the fields for this object, split these into different 'if' checks */
                 //Execute UPDATE statement
-                if (this.getName() != null || this.getParentDir() != null) {
+                if (this.getName() != null || this.getParentDirId() != null) {
                     updateNameStatement.setString(1, this.getName());
                     updateNameStatement.setObject(2, this.getId());
                     updateNameStatement.executeUpdate();
 
-                    updateParentDirStatement.setInt(1, this.getParentDir());
+                    updateParentDirStatement.setObject(1, this.getParentDirId());
                     updateParentDirStatement.setObject(2, this.getId());
                     updateParentDirStatement.executeUpdate();
                 } else {
@@ -414,7 +407,7 @@ public class EntityDirectory {
         StringBuilder returnString = new StringBuilder();
 
         returnString.append(this.getId()).append(") ").append(this.getName()).append(", \n\tParent Directory PK# ")
-                .append(this.getParentDir());
+                .append(this.getParentDirId());
 
         return returnString.toString();
     }
