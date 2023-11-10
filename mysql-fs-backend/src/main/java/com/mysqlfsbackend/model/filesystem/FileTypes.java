@@ -1,4 +1,4 @@
-package com.mysqlfsbackend.model;
+package com.mysqlfsbackend.model.filesystem;
 
 /**
  * This enumeration defines the file types (and corresponding extensions) that is managed by MySQLFSBackend

@@ -3,12 +3,8 @@ package com.mysqlfsbackend.model;
 import java.sql.*;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-import lombok.Data;
-import jakarta.persistence.Entity;
 
 //Replace CRUD names with Restful names
-@Data
-@Entity
 public class EntityDirectory extends EntityAbstract{
 
     //TODO the inclusion of both of these may be redundant

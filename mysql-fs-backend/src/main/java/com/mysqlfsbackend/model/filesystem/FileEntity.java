@@ -1,4 +1,4 @@
-package com.mysqlfsbackend.model;
+package com.mysqlfsbackend.model.filesystem;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,19 +9,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.UUID;
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "File")
-public class FileEntity extends EntityAbstract{
+public class FileEntity implements FileSystemObject {
+    @Id
+    private String id;
+    private String name;
+    private String parentDirId;
+    private Integer permission;
+    private String ownerUserId;
+    private String ownerGroupId;
+    private Integer size;
+
     @Enumerated(EnumType.STRING)
     private FileTypes fileType;
+
     private String content;
 }
