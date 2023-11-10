@@ -18,7 +18,7 @@ public class DirectoryEntity implements FileSystemObject{
     private String name;
     private String parentDirId;
     private Integer permission;
-    private Integer ownerUserId;
-    private Integer ownerGroupId;
+    private String ownerUserId;
+    private String ownerGroupId;
     private Integer size;
 }

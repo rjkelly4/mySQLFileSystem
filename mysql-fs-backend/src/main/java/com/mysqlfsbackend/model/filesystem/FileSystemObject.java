@@ -8,10 +8,10 @@ public interface FileSystemObject {
     void setParentDirId(String parentDirId);
     Integer getPermission();
     void setPermission(Integer permission);
-    Integer getOwnerUserId();
-    void setOwnerUserId(Integer ownerUserId);
-    Integer getOwnerGroupId();
-    void setOwnerGroupId(Integer ownerGroupId);
+    String getOwnerUserId();
+    void setOwnerUserId(String ownerUserId);
+    String getOwnerGroupId();
+    void setOwnerGroupId(String ownerGroupId);
     Integer getSize();
     void setSize(Integer size);
 }
