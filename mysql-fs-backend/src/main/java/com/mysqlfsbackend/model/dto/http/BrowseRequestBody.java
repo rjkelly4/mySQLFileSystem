@@ -1,4 +1,4 @@
-package com.mysqlfsbackend.model.dto;
+package com.mysqlfsbackend.model.dto.http;
 
 import lombok.Getter;
 import lombok.Setter;
