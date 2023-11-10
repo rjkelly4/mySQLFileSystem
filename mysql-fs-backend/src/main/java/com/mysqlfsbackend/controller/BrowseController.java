@@ -42,6 +42,8 @@ public class BrowseController {
         Optional<DirectoryEntity> workDirectory = browseService.getDirectoryFromPath(root, directoryPath);
 
         List<List<FileSystemObject>> browseResults;
+
+        // TODO: Add message to response body
         if (workDirectory.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
@@ -63,6 +65,7 @@ public class BrowseController {
 
         Optional<FileEntity> targetFile = browseService.getFileFromPath(root, filePath);
 
+        // TODO: Add message to response body
         if (targetFile.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
