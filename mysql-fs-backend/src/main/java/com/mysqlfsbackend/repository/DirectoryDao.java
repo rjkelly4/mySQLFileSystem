@@ -1,7 +1,9 @@
 package com.mysqlfsbackend.repository;
 
 import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,10 +33,12 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
                             @Param("parentDirId") String parentDirId, @Param("permission") Integer permission,
                             @Param("ownerUserId") Integer ownerUserId, @Param("ownerGroupId") Integer ownerGroupId);
 
-    @Query(value = "INSERT INTO directories (id, name, parentDir, permission, ownerUserId, ownerGroupId) "
-            + "VALUES (UUID(), :name, :parentDirId, :permission, :ownerUserId, :ownerGroupId);",
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO Directory (name, parentDirId, permission, ownerUserId, ownerGroupId, size), "
+            + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size);",
             nativeQuery = true)
-    String customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                        @Param("permission") Integer permission, @Param("ownerUserId") Integer ownerUserId,
-                        @Param("ownerGroupId") Integer ownerGroupId);
+    int customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
+                        @Param("permission") Integer permission, @Param("ownerUserId") String ownerUserId,
+                        @Param("ownerGroupId") String ownerGroupId, @Param("size") int size);
 }
