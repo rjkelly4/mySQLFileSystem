@@ -23,11 +23,19 @@ public class DeleteController {
         return ("All set!" + String.valueOf(id));
     }
 
-    @DeleteMapping(value = {"/api/delete"})
-    public ResponseEntity<Object> DeleteNewDirectory(@RequestParam String name, @RequestParam
+    @DeleteMapping(value = {"/api/deleteDirectory"})
+    public ResponseEntity<Object> DeleteDirectory(@RequestParam String id, @RequestParam String name, @RequestParam
             String parentDirId) {
 
-        DeleteService.deleteDirectory(name, parentDirId);
+        DeleteService.deleteDirectory(id, name, parentDirId);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+
+    @DeleteMapping(value = {"/api/deleteFile"})
+    public ResponseEntity<Object> DeleteFile(@RequestParam String id, @RequestParam String name, @RequestParam
+    String parentDirId) {
+
+        DeleteService.deleteFile(id, name, parentDirId);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

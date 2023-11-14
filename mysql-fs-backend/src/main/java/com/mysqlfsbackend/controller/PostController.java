@@ -23,15 +23,25 @@ public class PostController {
         return ("All set!" + String.valueOf(id));
     }
 
-    @PostMapping(value = {"/post"})
-    public ResponseEntity<Object> postNewDirectory(@RequestParam String name, @RequestParam
+    @PostMapping(value = {"/postDirectory"})
+    public ResponseEntity<Object> postDirectory(@RequestParam String name, @RequestParam
                                                   String parentDirId, @RequestParam int permission,
                                                   @RequestParam String ownerUserId, @RequestParam String
                                                   ownerGroupId, @RequestParam int size) {
         DirectoryEntity newDir = new DirectoryEntity(null, name, parentDirId, permission, ownerUserId, ownerGroupId,
                 size);
 
-        postService.postNewDirectory(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        postService.postDirectory(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+
+    @PostMapping(value = {"/postFile"})
+    public ResponseEntity<Object> postFile(@RequestParam String name, @RequestParam String parentDirId,
+                                           @RequestParam int permission, @RequestParam String ownerUserId,
+                                           @RequestParam String ownerGroupId, @RequestParam int size,
+                                           @RequestParam String fileType, @RequestParam String content) {
+        postService.postFile(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType,
+                content);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }
