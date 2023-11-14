@@ -1,0 +1,33 @@
+package com.mysqlfsbackend.controller;
+
+import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import com.mysqlfsbackend.service.DeleteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+@RestController
+public class DeleteController {
+    private final DeleteService DeleteService;
+
+    @Autowired
+    public DeleteController(DeleteService DeleteService) {
+        this.DeleteService = DeleteService;
+    }
+
+    @DeleteMapping(value = {"/test"})
+    public String test(@RequestParam Integer id){
+        return ("All set!" + String.valueOf(id));
+    }
+
+    @DeleteMapping(value = {"/api/delete"})
+    public ResponseEntity<Object> DeleteNewDirectory(@RequestParam String name, @RequestParam
+            String parentDirId) {
+
+        DeleteService.deleteDirectory(name, parentDirId);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+}
