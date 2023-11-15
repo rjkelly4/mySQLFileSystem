@@ -29,7 +29,7 @@ public class FileSystemObjectDtoFactory {
                 workingDirectory.getId(), // TODO: mask real id
                 workingDirectory.getName(),
                 workingDirectory.getSize(),
-                workingDirectory.getPermission().toString(), // TODO: change to String
+                workingDirectory.getPermission(),
                 workingDirectory.getOwnerUserId(), // TODO: get user name
                 workingDirectory.getOwnerGroupId(), // TODO: get group name,
                 new ArrayList<>()
@@ -74,12 +74,12 @@ public class FileSystemObjectDtoFactory {
      */
     public static FileSystemObjectDto convertToDto(FileSystemObject object) {
         if (object instanceof FileEntity file) {
-            return new FileDto(file.getId(), file.getName(), file.getSize(), file.getPermission().toString(),
+            return new FileDto(file.getId(), file.getName(), file.getSize(), file.getPermission(),
                     file.getOwnerUserId(), file.getOwnerGroupId(), file.getFileType().toString(), file.getContent());
         }
         if (object instanceof DirectoryEntity directory) {
             return new DirectoryDto(directory.getId(), directory.getName(), directory.getSize(),
-                    directory.getPermission().toString(), directory.getOwnerUserId(),
+                    directory.getPermission(), directory.getOwnerUserId(),
                     directory.getOwnerGroupId(), new ArrayList<>());
         }
         return null;
