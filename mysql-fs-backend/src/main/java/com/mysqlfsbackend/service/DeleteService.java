@@ -25,7 +25,7 @@ public class DeleteService {
     }
 
     public void deleteFile(String id, String name, String parentDirId) {
-        jdbcTemplate.update("DELETE FROM File WHERE parentDirId = ? AND name = ? AND parentDirId = ?;",
+        jdbcTemplate.update("DELETE FROM File WHERE id = ? AND name = ? AND parentDirId = ?;",
                 id, name, parentDirId);
     }
 }
