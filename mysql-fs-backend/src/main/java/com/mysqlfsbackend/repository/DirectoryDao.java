@@ -24,21 +24,12 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             nativeQuery = true)
     List<DirectoryEntity> getOrderedChildLayer(@Param("parentDirIds") List<String> parentDirIds);
 
-    @Query(value = "UPDATE directories "
-            + "SET d.name = :name, d.parentDir = :parentDirId, d.permission = :permission, "
-            + "d.ownerUserId = :ownerUserId, d.ownerGroupId = :ownerGroupId "
-            + "where d.id = :id",
-            nativeQuery = true)
-    String customUpdateById(@Param("id") String id, @Param("name") String name,
-                            @Param("parentDirId") String parentDirId, @Param("permission") Integer permission,
-                            @Param("ownerUserId") Integer ownerUserId, @Param("ownerGroupId") Integer ownerGroupId);
-
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Directory (d.name, d.parentDirId, d.permission, d.ownerUserId, d.ownerGroupId, d.size), "
+    @Query(value = "INSERT INTO Directory (name, parentDirId, permission, ownerUserId, ownerGroupId, size) "
             + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size);",
             nativeQuery = true)
-    int customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
+    void customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
                         @Param("permission") Integer permission, @Param("ownerUserId") String ownerUserId,
                         @Param("ownerGroupId") String ownerGroupId, @Param("size") int size);
 }

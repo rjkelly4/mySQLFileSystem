@@ -23,16 +23,13 @@ public class PostService {
                                         int permission, String ownerUserId,
                                         String ownerGroupId, int size) {
 
-        jdbcTemplate.update("INSERT INTO Directory (name, parentDirId, permission, ownerUserId, ownerGroupId, size) "
-                        + "VALUES (?, ?, ?, ?, ?, ?);", name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        directoryDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
     }
 
     public void postFile(String name, String parentDirId,
                               int permission, String ownerUserId,
                               String ownerGroupId, int size, String fileType, String content) {
 
-        jdbcTemplate.update("INSERT INTO File (name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
-                name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
+        fileDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
     }
 }
