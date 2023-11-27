@@ -29,4 +29,13 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
                   @Param("permission") int permission, @Param("ownerUserId") String ownerUserId,
                   @Param("ownerGroupId") String ownerGroupId, @Param("size") int size,
                   @Param("fileType") String fileType, @Param("content") String content);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE File" +
+            " SET parentDirId = :newParentDirId" +
+            " WHERE id = :id",
+            nativeQuery = true)
+    void putParentDir(@Param("newParentDirId") String newParentDirId,
+                      @Param("id") String id);
 }

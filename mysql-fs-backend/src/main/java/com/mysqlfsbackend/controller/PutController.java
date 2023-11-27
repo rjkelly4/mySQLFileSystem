@@ -18,10 +18,18 @@ public class PutController {
     }
 
     @PutMapping(value = {"/api/putDirectoryParent"})
-    public ResponseEntity<Object> PutDirectory(@RequestParam String newParentDirId,
-                                               @RequestParam String id) {
+    public ResponseEntity<Object> PutDirectoryParent(@RequestParam String newParentDirId,
+                                                     @RequestParam String id) {
 
         PutService.putDirParent(newParentDirId, id);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+
+    @PutMapping(value = {"/api/putFileParent"})
+    public ResponseEntity<Object> putFileParent(@RequestParam String newParentDirId,
+                                                @RequestParam String id) {
+
+        PutService.putFileParent(newParentDirId, id);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

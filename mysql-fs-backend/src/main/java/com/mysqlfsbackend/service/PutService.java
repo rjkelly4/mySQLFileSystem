@@ -34,4 +34,9 @@ public class PutService {
 
         directoryDao.putParentDir(newParentDirId, id);
     }
+
+    public void putFileParent(String newParentDirId, String id){
+
+        fileDao.putParentDir(newParentDirId, id);
+    }
 }
