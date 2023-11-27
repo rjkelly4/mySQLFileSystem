@@ -31,12 +31,18 @@ public class PutService {
     }
 
     public void putDirParent(String newParentDirId, String id){
-
         directoryDao.putParentDir(newParentDirId, id);
     }
 
     public void putFileParent(String newParentDirId, String id){
-
         fileDao.putParentDir(newParentDirId, id);
+    }
+
+    public void putDirName(String name, String id) {
+        directoryDao.putName(name, id);
+    }
+
+    public void putFileName(String name, String id) {
+        fileDao.putName(name, id);
     }
 }

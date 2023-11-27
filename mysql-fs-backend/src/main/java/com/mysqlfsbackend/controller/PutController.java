@@ -32,4 +32,20 @@ public class PutController {
         PutService.putFileParent(newParentDirId, id);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
+
+    @PutMapping(value = {"/api/putDirName"})
+    public ResponseEntity<Object> putDirName(@RequestParam String newName,
+            @RequestParam String id) {
+
+        PutService.putDirName(newName, id);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
+
+    @PutMapping(value = {"/api/putFileName"})
+    public ResponseEntity<Object> putFileName(@RequestParam String newName,
+                                             @RequestParam String id) {
+
+        PutService.putFileName(newName, id);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
 }
