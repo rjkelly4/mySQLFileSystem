@@ -39,7 +39,7 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             " SET parentDirId = :newParentDirId" +
             " WHERE id = :id",
             nativeQuery = true)
-    void putParentDir(@Param("newParentDirId") String newParentDirId,
+    void patchParentDir(@Param("newParentDirId") String newParentDirId,
                       @Param("id") String id);
 
     @Modifying
@@ -48,6 +48,6 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             " SET name = :newName" +
             " WHERE id = :id",
             nativeQuery = true)
-    void putName(@Param("newName") String newName,
+    void patchName(@Param("newName") String newName,
                       @Param("id") String id);
 }
