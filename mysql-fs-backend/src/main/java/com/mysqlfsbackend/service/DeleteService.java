@@ -19,13 +19,13 @@ public class DeleteService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void deleteDirectory(String id, String name, String parentDirId) {
-        jdbcTemplate.update("DELETE FROM Directory WHERE id = ? AND name = ? AND parentDirId = ?;",
-                id, name, parentDirId);
+    public void deleteDirectory(String id) {
+        jdbcTemplate.update("DELETE FROM Directory WHERE id = ?;",
+                id);
     }
 
-    public void deleteFile(String id, String name, String parentDirId) {
-        jdbcTemplate.update("DELETE FROM File WHERE id = ? AND name = ? AND parentDirId = ?;",
-                id, name, parentDirId);
+    public void deleteFile(String id) {
+        jdbcTemplate.update("DELETE FROM File WHERE id = ?;",
+                id);
     }
 }

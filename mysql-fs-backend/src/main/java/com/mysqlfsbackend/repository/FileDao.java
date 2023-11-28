@@ -26,8 +26,8 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
             + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size, :fileType, :content)",
             nativeQuery = true)
     void customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                  @Param("permission") int permission, @Param("ownerUserId") String ownerUserId,
-                  @Param("ownerGroupId") String ownerGroupId, @Param("size") int size,
+                  @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                  @Param("ownerGroupId") String ownerGroupId, @Param("size") String size,
                   @Param("fileType") String fileType, @Param("content") String content);
 
     @Modifying

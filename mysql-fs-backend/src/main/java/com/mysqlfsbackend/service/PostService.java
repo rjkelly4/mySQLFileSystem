@@ -20,15 +20,15 @@ public class PostService {
     }
 
     public void postDirectory(String name, String parentDirId,
-                                        int permission, String ownerUserId,
-                                        String ownerGroupId, int size) {
+                                        String permission, String ownerUserId,
+                                        String ownerGroupId, String size) {
 
         directoryDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
     }
 
     public void postFile(String name, String parentDirId,
-                              int permission, String ownerUserId,
-                              String ownerGroupId, int size, String fileType, String content) {
+                              String permission, String ownerUserId,
+                              String ownerGroupId, String size, String fileType, String content) {
 
         fileDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
     }

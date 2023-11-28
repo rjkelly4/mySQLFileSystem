@@ -1,9 +1,11 @@
 package com.mysqlfsbackend.controller;
 
+import com.mysqlfsbackend.model.dto.http.PatchBody;
 import com.mysqlfsbackend.service.PatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,34 +20,30 @@ public class PatchController {
     }
 
     @PatchMapping(value = {"/api/patchDirectoryParent"})
-    public ResponseEntity<Object> PatchDirectoryParent(@RequestParam String newParentDirId,
-                                                     @RequestParam String id) {
+    public ResponseEntity<Object> PatchDirectoryParent(@RequestBody PatchBody patchBody) {
 
-        patchService.patchDirParent(newParentDirId, id);
+        patchService.patchDirParent(patchBody.getModifiedField(), patchBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
     @PatchMapping(value = {"/api/patchFileParent"})
-    public ResponseEntity<Object> patchFileParent(@RequestParam String newParentDirId,
-                                                @RequestParam String id) {
+    public ResponseEntity<Object> patchFileParent(@RequestBody PatchBody patchBody) {
 
-        patchService.patchFileParent(newParentDirId, id);
+        patchService.patchFileParent(patchBody.getModifiedField(), patchBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
     @PatchMapping(value = {"/api/patchDirName"})
-    public ResponseEntity<Object> patchDirName(@RequestParam String newName,
-            @RequestParam String id) {
+    public ResponseEntity<Object> patchDirName(@RequestBody PatchBody patchBody) {
 
-        patchService.patchDirName(newName, id);
+        patchService.patchDirName(patchBody.getModifiedField(), patchBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
     @PatchMapping(value = {"/api/patchFileName"})
-    public ResponseEntity<Object> patchFileName(@RequestParam String newName,
-                                             @RequestParam String id) {
+    public ResponseEntity<Object> patchFileName(@RequestBody PatchBody patchBody) {
 
-        patchService.patchFileName(newName, id);
+        patchService.patchFileName(patchBody.getModifiedField(), patchBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }
