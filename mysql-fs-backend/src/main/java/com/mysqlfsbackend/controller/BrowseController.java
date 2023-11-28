@@ -30,7 +30,6 @@ public class BrowseController {
         this.browseService = browseService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = {"/api/browse/folders"})
     public ResponseEntity<DirectoryDto> getDirectoryContentFromPath(@RequestParam Optional<String> path,
                                                                     @RequestBody Optional<BrowseRequestBody> requestBody) {
