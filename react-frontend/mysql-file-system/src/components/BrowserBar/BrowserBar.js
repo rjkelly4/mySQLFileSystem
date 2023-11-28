@@ -7,7 +7,7 @@ import './BrowserBar.css'
 
 const BrowserBar = (props) => {
   return (
-    <div className={"container"}>
+    <div className="BrowserBar">
       <form className="barContainer" onSubmit={props.handleSubmit}>
         <TextField label="Where would you like to look?"
                    value={props.pathInput}
