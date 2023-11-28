@@ -51,6 +51,16 @@ const BrowserPage = (props) => {
   const [newFileModalOpen, setNewFileModalOpen] = useState(false);
 
   const requestData = (pathname, depth) => {
+    const endpoint = `//127.0.0.1:8088/api/browse/folders?path=${pathname}`
+    // const response = fetch(endpoint);
+    // const data = response.json();
+    //
+    // console.log(`Response: ${data}`);
+
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => console.log(`Response: ${data}`));
+
     // Get a response from the endpoint using the pathname & depth
     const database = JSON.parse(JSON.stringify(testFileTree));
     // Update the current shadow tree
@@ -68,12 +78,12 @@ const BrowserPage = (props) => {
 
     // Get the path
     const path = `/${params["*"]}`;
-    console.log(path);
+    // console.log(path);
     setPathInput(path);
     const localTree = JSON.parse(sessionStorage.getItem("shadowTree"));
     const fileNames = path.split("/");
     fileNames.shift();
-    console.log(fileNames)
+    // console.log(fileNames)
 
     setValidPath(true);
 
@@ -84,7 +94,7 @@ const BrowserPage = (props) => {
     columns.push([file]);
 
     for (let fileName of fileNames) {
-      console.log(`File name: ${fileName}`)
+      // console.log(`File name: ${fileName}`)
       // Add the children to the display columns
       let children = file.children;
       columns.push(children);
@@ -101,10 +111,10 @@ const BrowserPage = (props) => {
     }
 
     setFileColumns(columns);
-    console.log(columns);
+    // console.log(columns);
     const activeFileObjects = columns.map(column => column.find(file => file.isActive));
-    console.log("Active file objects:");
-    console.log(activeFileObjects);
+    // console.log("Active file objects:");
+    // console.log(activeFileObjects);
     // If the last item is a file, update the displayFile by sending request to the endpoint.
     if (activeFileObjects[activeFileObjects.length - 1] &&
       activeFileObjects[activeFileObjects.length - 1].contents) {

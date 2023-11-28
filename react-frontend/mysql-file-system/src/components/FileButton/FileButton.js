@@ -9,7 +9,7 @@ const FileButton = (props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log(props.path);
+    // console.log(props.path);
     navigate("/browse" + props.path);
   }
 
