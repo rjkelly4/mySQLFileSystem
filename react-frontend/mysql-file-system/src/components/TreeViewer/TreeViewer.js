@@ -15,6 +15,14 @@ const TreeViewer = (props) => {
     scrollRight();
   }, [props.fileColumns]);
 
+  const calculateParentPath = (columnIndex) => {
+    const relevantFiles = props.activeFiles
+                               .slice(0, columnIndex)
+                               .filter(file => file)
+                               .map(file => file.name);
+
+    return `${relevantFiles.join('/')}/`;
+  }
 
   if (!props.validPath) {
     return <h1>Invalid Path!</h1>;
@@ -26,7 +34,10 @@ const TreeViewer = (props) => {
              spacing={1}
              divider={<Divider orientation="vertical" flexItem />}>
         {props.fileColumns.map((fileColumn, i) =>
-          <FileColumn key={i} files={fileColumn} activePath={props.activePath} />
+          <FileColumn key={i}
+                      files={fileColumn}
+                      parentPath={calculateParentPath(i)}
+          />
         )}
         <div ref={endRef} />
       </Stack>
