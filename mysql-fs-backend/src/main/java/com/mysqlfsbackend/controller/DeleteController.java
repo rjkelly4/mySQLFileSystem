@@ -1,10 +1,11 @@
 package com.mysqlfsbackend.controller;
 
+import com.mysqlfsbackend.model.dto.http.DeleteBody;
 import com.mysqlfsbackend.service.DeleteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -18,18 +19,16 @@ public class DeleteController {
     }
 
     @DeleteMapping(value = {"/api/deleteDirectory"})
-    public ResponseEntity<Object> DeleteDirectory(@RequestParam String id, @RequestParam String name, @RequestParam
-            String parentDirId) {
+    public ResponseEntity<Object> DeleteDirectory(@RequestBody DeleteBody deleteBody) {
 
-        DeleteService.deleteDirectory(id, name, parentDirId);
+        DeleteService.deleteDirectory(deleteBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
     @DeleteMapping(value = {"/api/deleteFile"})
-    public ResponseEntity<Object> DeleteFile(@RequestParam String id, @RequestParam String name, @RequestParam
-    String parentDirId) {
+    public ResponseEntity<Object> DeleteFile(@RequestBody DeleteBody deleteBody) {
 
-        DeleteService.deleteFile(id, name, parentDirId);
+        DeleteService.deleteFile(deleteBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

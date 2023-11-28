@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PatchBody {
-    private String modifiedField;
+public class DeleteBody {
     private String id;
 }
