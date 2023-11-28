@@ -1,9 +1,11 @@
 package com.mysqlfsbackend.controller;
 
+import com.mysqlfsbackend.model.dto.http.PostBody;
 import com.mysqlfsbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,23 +20,19 @@ public class PostController {
     }
 
     @PostMapping(value = {"/api/postDirectory"})
-    public ResponseEntity<Object> postDirectory(@RequestParam String name, @RequestParam
-                                                  String parentDirId, @RequestParam int permission,
-                                                  @RequestParam String ownerUserId, @RequestParam String
-                                                  ownerGroupId, @RequestParam int size) {
+    public ResponseEntity<Object> postDirectory(@RequestBody PostBody postBody) {
 
-        postService.postDirectory(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        postService.postDirectory(postBody.getName(), postBody.getParentId(), postBody.getPermission(),
+                                    postBody.getOwnerUserId(), postBody.getOwnerGroupId(), postBody.getSize());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
     @PostMapping(value = {"/api/postFile"})
-    public ResponseEntity<Object> postFile(@RequestParam String name, @RequestParam String parentDirId,
-                                           @RequestParam int permission, @RequestParam String ownerUserId,
-                                           @RequestParam String ownerGroupId, @RequestParam int size,
-                                           @RequestParam String fileType, @RequestParam String content) {
+    public ResponseEntity<Object> postFile(@RequestBody PostBody postBody) {
 
-        postService.postFile(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType,
-                content);
+        postService.postFile(postBody.getName(), postBody.getParentId(), postBody.getPermission(),
+                postBody.getOwnerUserId(), postBody.getOwnerGroupId(), postBody.getSize(),
+                postBody.getFileType(), postBody.getContent());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }
