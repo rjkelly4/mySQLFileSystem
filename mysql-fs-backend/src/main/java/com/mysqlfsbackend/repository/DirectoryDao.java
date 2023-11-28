@@ -30,8 +30,8 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size);",
             nativeQuery = true)
     void customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                        @Param("permission") Integer permission, @Param("ownerUserId") String ownerUserId,
-                        @Param("ownerGroupId") String ownerGroupId, @Param("size") int size);
+                        @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                        @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
 
     @Modifying
     @Transactional
