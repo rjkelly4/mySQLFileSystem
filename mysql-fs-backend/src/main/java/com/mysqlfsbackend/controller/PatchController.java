@@ -1,9 +1,11 @@
 package com.mysqlfsbackend.controller;
 
+import com.mysqlfsbackend.model.dto.http.PatchBody;
 import com.mysqlfsbackend.service.PatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,10 +20,9 @@ public class PatchController {
     }
 
     @PatchMapping(value = {"/api/patchDirectoryParent"})
-    public ResponseEntity<Object> PatchDirectoryParent(@RequestParam String newParentDirId,
-                                                     @RequestParam String id) {
+    public ResponseEntity<Object> PatchDirectoryParent(@RequestBody PatchBody patchBody) {
 
-        patchService.patchDirParent(newParentDirId, id);
+        patchService.patchDirParent(patchBody.getNewParentDirId().toString(), patchBody.getId().toString());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
