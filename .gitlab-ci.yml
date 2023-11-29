@@ -7,4 +7,5 @@ stages:
 
 debug:
   stage: test
-  script: .mvnw clean install
+  script: 
+    - .mvnw clean install
