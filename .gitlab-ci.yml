@@ -8,4 +8,4 @@ stages:
 debug:
   stage: test
   script: 
-    - ./mvnw clean install
+    - ./mysql-fs-backend/mvnw clean install
