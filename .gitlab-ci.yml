@@ -7,5 +7,6 @@ stages:
 
 debug:
   stage: test
-  script: 
+  script:
+    - cd mysql-fs-backend
     - mvn test
