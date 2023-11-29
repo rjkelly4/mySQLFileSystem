@@ -8,4 +8,4 @@ stages:
 debug:
   stage: test
   script: 
-    - .mvnw clean install
+    - ./mvnw clean install
