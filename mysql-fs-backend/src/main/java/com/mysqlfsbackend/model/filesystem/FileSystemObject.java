@@ -6,8 +6,8 @@ public interface FileSystemObject {
     void setName(String name);
     String getParentDirId();
     void setParentDirId(String parentDirId);
-    Integer getPermission();
-    void setPermission(Integer permission);
+    String getPermission();
+    void setPermission(String permission);
     String getOwnerUserId();
     void setOwnerUserId(String ownerUserId);
     String getOwnerGroupId();

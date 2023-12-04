@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class BrowseRequestBody {
     private Integer browseDepth;
-    private Boolean isFile;
 }
