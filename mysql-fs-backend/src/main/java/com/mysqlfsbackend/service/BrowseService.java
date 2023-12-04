@@ -61,6 +61,9 @@ public class BrowseService {
         DirectoryEntity currDirectory = workingDirectory;
 
         for (String directory : path) {
+            if (directory.isEmpty()) {
+                break;
+            }
             currDirectory = directoryDao.getChildByName(currDirectory.getId(), directory);
             if (currDirectory == null) {
                 break;
