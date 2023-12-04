@@ -14,6 +14,19 @@ const makeRequest = async (endpoint, request) => {
 // Browse Functions //
 //////////////////////
 
+const assignChildrenLoaded = (dir, currDepth, lastDepth) => {
+    if (currDepth > lastDepth) return;
+
+    if (currDepth === lastDepth) {
+        dir.childrenLoaded = false;
+    } else {
+        dir.childrenLoaded = true;
+        for (let child of dir.children) {
+            assignChildrenLoaded(child, currDepth + 1, lastDepth);
+        }
+    }
+}
+
 export const getDirectoryContent = async (path, depth) => {
     const endpoint = `${api}/browse/folders`;
     const request = {
@@ -29,13 +42,13 @@ export const getDirectoryContent = async (path, depth) => {
 
     const data = await makeRequest(endpoint, request);
 
-    // TODO: Filter data before returning
+    assignChildrenLoaded(data, 0, depth);
 
     return data;
 }
 
 export const getFileContent = async (path) => {
-    const endpoint = `${api}/browse/folders`;
+    const endpoint = `${api}/browse/files`;
     const request = {
         method: 'GET',
         headers: {
