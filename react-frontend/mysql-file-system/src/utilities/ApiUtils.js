@@ -1,6 +1,14 @@
 
 const api = "//localhost:8088/api";
 
+/**
+ * Makes a request to the specified endpoint and returns a Promise that resolves
+ * to the JSON object contained within the response.
+ *
+ * @param endpoint The endpoint to be requested
+ * @param request The request object
+ * @returns {Promise<any>} Resolves to the JSON object contained within the response.
+ */
 const makeRequest = async (endpoint, request) => {
     const response = await fetch(endpoint, request);
     if (!response.ok) {
@@ -14,6 +22,16 @@ const makeRequest = async (endpoint, request) => {
 // Browse Functions //
 //////////////////////
 
+/**
+ * Assigns the appropriate childrenLoaded flag to the provided directory and its children,
+ * up to the specified depth. Assigns false if the current depth is equal to the last depth,
+ * true if the current depth is less. This function does nothing if current depth is greater
+ * than last depth.
+ *
+ * @param dir The directory that is to be assigned a value on this recursion.
+ * @param currDepth The level of depth of dir
+ * @param lastDepth The final level of depth to check
+ */
 const assignChildrenLoaded = (dir, currDepth, lastDepth) => {
     if (currDepth > lastDepth) return;
 
@@ -22,11 +40,20 @@ const assignChildrenLoaded = (dir, currDepth, lastDepth) => {
     } else {
         dir.childrenLoaded = true;
         for (let child of dir.children) {
-            assignChildrenLoaded(child, currDepth + 1, lastDepth);
+            if (child.isDirectory)
+                assignChildrenLoaded(child, currDepth + 1, lastDepth);
         }
     }
 }
 
+/**
+ * Requests a directory from the /browse/folders API endpoint with its descendants
+ * up to the specified depth. Also assigns a childrenLoaded flag to each directory object.
+ *
+ * @param path The path to initially search
+ * @param depth The number of generations of descendants to request
+ * @returns {Promise<*>} Resolves to a JSON object associated with the directory at path.
+ */
 export const getDirectoryContent = async (path, depth) => {
     const endpoint = `${api}/browse/folders`;
     const request = {
@@ -47,6 +74,12 @@ export const getDirectoryContent = async (path, depth) => {
     return data;
 }
 
+/**
+ * Requests a file's contents from the /browse/files API endpoint.
+ *
+ * @param path
+ * @returns {Promise<*>}
+ */
 export const getFileContent = async (path) => {
     const endpoint = `${api}/browse/files`;
     const request = {
