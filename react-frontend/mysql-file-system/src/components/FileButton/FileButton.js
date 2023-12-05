@@ -9,15 +9,15 @@ const FileButton = (props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // console.log(props.path);
-    navigate("/browse" + props.path);
+    console.log(props.path);
+    navigate("/browse/" + props.path);
   }
 
   return (
       <Paper onClick={handleClick}
              elevation={props.file.isActive ? 3 : 0}
              sx={{ padding: '10px' }}>
-        {props.file.name + (props.file.children ? "/" : "")}
+        {props.file.name + (props.file.isDirectory ? "/" : "")}
       </Paper>
   )
 }

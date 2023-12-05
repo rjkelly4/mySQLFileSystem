@@ -72,6 +72,7 @@ const BrowserPage = (props) => {
     // Check for the shadowtree, if it doesn't exist initialize it.
     if (!sessionStorage.getItem("shadowTree")) {
       const requestedTree = await api.getDirectoryContent("/", 5);
+      requestedTree.name = ""
       sessionStorage.setItem("shadowTree", JSON.stringify(requestedTree));
     }
 

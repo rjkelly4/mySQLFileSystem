@@ -6,7 +6,6 @@ import FileButton from "../FileButton/FileButton";
 import "./FileColumn.css";
 
 const FileColumn = (props) => {
-
   if (props.files.length === 0) {
     return (
       <Typography sx={{textOrientation: 'sideways',
