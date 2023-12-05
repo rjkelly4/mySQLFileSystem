@@ -16,18 +16,22 @@ public class PutService {
         this.fileDao = fileDao;
     }
 
-    public void putDirectory(String name, String parentDirId,
+    public void putDirectory(String id, String name, String parentDirId,
                               String permission, String ownerUserId,
                               String ownerGroupId, String size) {
 
-        directoryDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        directoryDao.put(id, name, parentDirId, permission, ownerUserId, ownerGroupId, size);
     }
 
-    public void putFile(String name, String parentDirId,
+    /**
+     * Modifies all the file's content if an id match is found. Should be idempotent, ie multiple requests will only
+     * create a single object.
+     */
+    public void putFile(String id, String name, String parentDirId,
                          String permission, String ownerUserId,
                          String ownerGroupId, String size, String fileType, String content) {
 
-        fileDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
+        fileDao.put(id, name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
     }
 
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostBody {
+    private String id;
     private String name;
     private String parentId;
     private String permission;
@@ -41,6 +42,11 @@ public class PostBody {
      * Auto-calculates the size of the file in bytes based on the number of chars
      */
     private void setSize() {
+        if (this.content == null) {
+            this.size = "0";
+            return;
+        }
+
         int fileSize = content.length();
         this.size = String.valueOf(fileSize);
     }

@@ -25,10 +25,10 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
     @Query(value = "INSERT INTO File (name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content) "
             + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size, :fileType, :content)",
             nativeQuery = true)
-    void customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                  @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
-                  @Param("ownerGroupId") String ownerGroupId, @Param("size") String size,
-                  @Param("fileType") String fileType, @Param("content") String content);
+    void postInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
+                    @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                    @Param("ownerGroupId") String ownerGroupId, @Param("size") String size,
+                    @Param("fileType") String fileType, @Param("content") String content);
 
     @Modifying
     @Transactional
@@ -47,4 +47,19 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
             nativeQuery = true)
     void patchName(@Param("newName") String newName,
                  @Param("id") String id);
+
+    /**
+     * Modifies all the file's content if an id match is found. Should be idempotent, ie multiple requests will only
+     * create a single object.
+     */
+    @Modifying
+    @Transactional
+    @Query (value = "UPDATE File SET name = :name, parentDirId = :parentDirId, permission = :permission, " +
+            "ownerUserId = :ownerUserId, ownerGroupId = :ownerGroupId, size = :size, fileType = :fileType, " +
+            "content = :content WHERE id = :id", nativeQuery = true
+            )
+    void put(@Param ("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
+              @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+              @Param("ownerGroupId") String ownerGroupId, @Param("size") String size,
+              @Param("fileType") String fileType, @Param("content") String content);
 }

@@ -23,13 +23,13 @@ public class PostService {
                                         String permission, String ownerUserId,
                                         String ownerGroupId, String size) {
 
-        directoryDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        directoryDao.postInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
     }
 
     public void postFile(String name, String parentDirId,
                               String permission, String ownerUserId,
                               String ownerGroupId, String size, String fileType, String content) {
 
-        fileDao.customInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
+        fileDao.postInsert(name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
     }
 }

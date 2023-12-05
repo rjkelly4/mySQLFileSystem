@@ -29,9 +29,9 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
     @Query(value = "INSERT INTO Directory (name, parentDirId, permission, ownerUserId, ownerGroupId, size) "
             + "VALUES (:name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size);",
             nativeQuery = true)
-    void customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                        @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
-                        @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
+    void postInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
+                    @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                    @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
 
     @Modifying
     @Transactional
@@ -50,4 +50,17 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             nativeQuery = true)
     void patchName(@Param("newName") String newName,
                       @Param("id") String id);
+
+    /**
+     * Modifies all the directory's content if an id match is found. Should be idempotent, ie multiple requests will only
+     * create a single object.
+     */
+    @Modifying
+    @Transactional
+    @Query (value = "UPDATE Directory SET name = :name, parentDirId = :parentDirId, permission = :permission, " +
+            "ownerUserId = :ownerUserId, ownerGroupId = :ownerGroupId, size = :size " +
+            "WHERE id = :id", nativeQuery = true)
+    void put(@Param ("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
+             @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+             @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
 }
