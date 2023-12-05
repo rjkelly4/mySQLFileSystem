@@ -1,19 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import BrowserBar from "../BrowserBar/BrowserBar";
 import TreeViewer from "../TreeViewer/TreeViewer";
 import FileViewer from "../FileViewer/FileViewer";
 import NewFolderModal from "../NewFolderModal/NewFolderModal";
 import NewFileModal from "../NewFileModal/NewFileModal";
 import { Divider, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
-
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-
 import "./BrowserPage.css";
 
 import { testFileTree } from "../../data/testFileTree";
+
+const api = require('../../utilities/ApiUtils.js');
 
 /*
  * Implementing Shadow Structure:
@@ -50,30 +49,30 @@ const BrowserPage = (props) => {
   const [newFolderModalOpen, setNewFolderModalOpen] = useState(false);
   const [newFileModalOpen, setNewFileModalOpen] = useState(false);
 
-  const requestData = (pathname, depth) => {
-    const endpoint = `//127.0.0.1:8088/api/browse/folders?path=${pathname}`
-    // const response = fetch(endpoint);
-    // const data = response.json();
-    //
-    // console.log(`Response: ${data}`);
+  // const requestData = (pathname, depth) => {
+  //   const endpoint = `//127.0.0.1:8088/api/browse/folders?path=${pathname}`
+  //   // const response = fetch(endpoint);
+  //   // const data = response.json();
+  //   //
+  //   // console.log(`Response: ${data}`);
+  //
+  //   fetch(endpoint)
+  //     .then(response => response.json())
+  //     .then(data => console.log(`Response: ${data}`));
+  //
+  //   // Get a response from the endpoint using the pathname & depth
+  //   const database = JSON.parse(JSON.stringify(testFileTree));
+  //   // Update the current shadow tree
+  //   let shadowTree = JSON.parse(sessionStorage.getItem("shadowTree"));
+  //   shadowTree = {...shadowTree, ...database};
+  //   sessionStorage.setItem("shadowTree", JSON.stringify(shadowTree));
+  // }
 
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => console.log(`Response: ${data}`));
-
-    // Get a response from the endpoint using the pathname & depth
-    const database = JSON.parse(JSON.stringify(testFileTree));
-    // Update the current shadow tree
-    let shadowTree = JSON.parse(sessionStorage.getItem("shadowTree"));
-    shadowTree = {...shadowTree, ...database};
-    sessionStorage.setItem("shadowTree", JSON.stringify(shadowTree));
-  }
-
-  const fetchRelevantFiles = () => {
+  const fetchRelevantFiles = async () => {
     // Check for the shadowtree, if it doesn't exist initialize it.
     if (!sessionStorage.getItem("shadowTree")) {
-      sessionStorage.setItem("shadowTree", JSON.stringify({}));
-      requestData("/", 6);
+      const requestedTree = await api.getDirectoryContent("/", 5);
+      sessionStorage.setItem("shadowTree", JSON.stringify(requestedTree));
     }
 
     // Get the path
@@ -96,7 +95,7 @@ const BrowserPage = (props) => {
     for (let fileName of fileNames) {
       // console.log(`File name: ${fileName}`)
       // Add the children to the display columns
-      let children = file.children;
+      let children = file.content;
       columns.push(children);
       // If the last element of fileName is "", the path is to a directory
       if (!fileName) {
@@ -124,7 +123,9 @@ const BrowserPage = (props) => {
 
   }
 
-  useEffect(fetchRelevantFiles, [params]);
+  useEffect(() => {
+    fetchRelevantFiles();
+  }, [params]);
 
   /**
    * Updates the pathInput state to reflect changes in the TextInput component of the

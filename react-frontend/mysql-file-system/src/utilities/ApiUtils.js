@@ -11,10 +11,6 @@ const api = "//localhost:8088/api";
  */
 const makeRequest = async (endpoint, request) => {
     const response = await fetch(endpoint, request);
-    if (!response.ok) {
-        alert("API Response Error Occurred!");
-        return;
-    }
     return response.json();
 }
 
@@ -39,7 +35,7 @@ const assignChildrenLoaded = (dir, currDepth, lastDepth) => {
         dir.childrenLoaded = false;
     } else {
         dir.childrenLoaded = true;
-        for (let child of dir.children) {
+        for (let child of dir.content) {
             if (child.isDirectory)
                 assignChildrenLoaded(child, currDepth + 1, lastDepth);
         }
@@ -57,17 +53,17 @@ const assignChildrenLoaded = (dir, currDepth, lastDepth) => {
 export const getDirectoryContent = async (path, depth) => {
     const endpoint = `${api}/browse/folders`;
     const request = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             path: path,
-            depth: depth
+            browseDepth: depth
         })
     }
 
-    const data = await makeRequest(endpoint, request);
+    const data = (await makeRequest(endpoint, request)).payload;
 
     assignChildrenLoaded(data, 0, depth);
 
