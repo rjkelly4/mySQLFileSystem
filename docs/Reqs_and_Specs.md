@@ -2,7 +2,7 @@
 
 2023-12-04, version 1.1
 
-# Project Description
+# Project Abstract
 
 A file system is used to store, organize, and manage files and directories in an
 operating system. The idea of this project is to implement an efficient
@@ -13,6 +13,18 @@ visualize any directory or subdirectory as a tree structure in the web
 interface.
 
 Tech Stack: Java, JavaScript, React, HTML, and CSS
+
+# Customer
+
+The customer for this software is an individual with a need to store
+documents, mainly text-based, in an online, tree-structured file system. The
+tree structure lends itself to text-based projects that have a large amount
+of files that require a level of organization that would be clumsy to
+navigate in current online file storage and sharing applications;
+Google's office suite, for example, is centered around a model that
+limits users' ability to easily create and navigate nested folder structures.
+
+
 
 # Document Revision History
 
@@ -197,20 +209,24 @@ are displayed.
 Upon selection of a .txt or other compatible file, the contents of the file
 will be visible in the file viewing window. The document can be selected
 either with a mouse in the directory tree, or navigated to directly through
-the path bar. If the contents of the file are larger than the space that is 
-allocated to the file viewing window, a scroll bar separate from the main 
-body of the page will allow for the user to browse the document's contents 
+the path bar. If the contents of the file are larger than the space that is
+allocated to the file viewing window, a scroll bar separate from the main
+body of the page will allow for the user to browse the document's contents
 without affecting the view selection of their chosen directory's structure.
 
 ### Add a File or Directory Modal
 
 ![AddFile.png](images%2FAddFile.png)
 
-Once the "add" button in the bottom-left corner of the directory overview 
-screen is hovered over, the options to add a file or folder become visible. 
-Choosing either of these options will create a pop-up modal, querying the 
-user for either the name (for a new directory) or a name and file contents (for 
-a new file). At the top of the modal, the user is informed of the current 
-working directory where the new file or directory will be created. There is a 
-level of validation in the naming convention, including the prevention of users 
+Once the "add" button in the bottom-left corner of the directory overview
+screen is hovered over, the options to add a file or folder become visible.
+Choosing either of these options will create a pop-up modal, querying the
+user for either the name (for a new directory) or a name and file contents (for
+a new file). At the top of the modal, the user is informed of the current
+working directory where the new file or directory will be created. There is a
+level of validation in the naming convention, including the prevention of users
 including slashes or other reserved characters in their file names.
+
+
+# Specification
+
