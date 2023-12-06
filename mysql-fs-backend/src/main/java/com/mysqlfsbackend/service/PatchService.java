@@ -31,4 +31,6 @@ public class PatchService {
     public void patchFileName(String name, String id) {
         fileDao.patchName(name, id);
     }
+
+    public void patchDirSize(String size, String id) {directoryDao.patchSize(size, id); }
 }

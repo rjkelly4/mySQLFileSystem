@@ -51,6 +51,15 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
     void patchName(@Param("newName") String newName,
                       @Param("id") String id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Directory" +
+            " SET size = :newSize" +
+            " WHERE id = :id",
+            nativeQuery = true)
+    void patchSize(@Param("newSize") String newSize,
+                   @Param("id") String id);
+
     /**
      * Modifies all the directory's content if an id match is found. Should be idempotent, ie multiple requests will only
      * create a single object.
@@ -63,4 +72,6 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
     void put(@Param ("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
              @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
              @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
+
+    DirectoryEntity getDirById(String id);
 }

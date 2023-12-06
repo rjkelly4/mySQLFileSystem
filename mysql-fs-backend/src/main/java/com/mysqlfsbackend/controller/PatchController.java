@@ -46,4 +46,11 @@ public class PatchController {
         patchService.patchFileName(patchBody.getModifiedField(), patchBody.getId());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
+
+    @PatchMapping(value = {"/api/patchDirSize"})
+    public ResponseEntity<Object> patchDirSize(@RequestBody PatchBody patchBody) {
+
+        patchService.patchDirSize(patchBody.getModifiedField(), patchBody.getId());
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    }
 }

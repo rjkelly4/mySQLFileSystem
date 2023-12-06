@@ -1,5 +1,7 @@
 package com.mysqlfsbackend.model.dto.http;
 
+import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import com.mysqlfsbackend.repository.DirectoryDao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,13 +43,14 @@ public class PostBody {
     /**
      * Auto-calculates the size of the file in bytes based on the number of chars
      */
-    private void setSize() {
+    private int setSize() {
         if (this.content == null) {
             this.size = "0";
-            return;
+            return 0;
         }
 
         int fileSize = content.length();
         this.size = String.valueOf(fileSize);
+        return fileSize;
     }
 }
