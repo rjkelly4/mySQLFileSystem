@@ -33,7 +33,7 @@ public class RequestValidatorTest {
     @Test
     public void testInvalidDepth() {
         String validPath = "folder/file";
-        Integer invalidDepth = 15;
+        Integer invalidDepth = 25;
 
         Optional<String> errorMessage = RequestValidator.validateBrowseRequest(validPath, invalidDepth);
 

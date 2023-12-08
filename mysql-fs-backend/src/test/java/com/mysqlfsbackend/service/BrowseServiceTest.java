@@ -25,9 +25,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(classes = BrowseServiceTest.class)
 @ActiveProfiles("test")
 public class BrowseServiceTest {
+    private final String testOUId = "eef533d0-95db-11ee-a9d1-0242ac120003";
+    private final String testOGId = "eeefc2a6-95db-11ee-a9d1-0242ac120003";
     @Mock
     private DirectoryDao directoryDao;
 
@@ -39,9 +41,9 @@ public class BrowseServiceTest {
 
     @Test
     void testGetDirectoryFromPath() {
-        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", "1", "1", 0);
-        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", "1", "1", 0);
-        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", "1", "1", 0);
+        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", testOUId, testOGId, 0);
+        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", testOUId, testOGId, 0);
+        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", testOUId, testOGId, 0);
 
         when(directoryDao.getChildByName(anyString(), anyString())).thenReturn(dirA, dirB);
 
@@ -57,10 +59,10 @@ public class BrowseServiceTest {
 
     @Test
     void testGetFileFromPath() {
-        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", "1", "1", 0);
-        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", "1", "1", 0);
-        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", "1", "1", 0);
-        FileEntity fileA = new FileEntity("0", "A", "2", "700", "1", "1", 3, FileTypes.NONE,"lol");
+        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", testOUId, testOGId, 0);
+        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", testOUId, testOGId, 0);
+        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", testOUId, testOGId, 0);
+        FileEntity fileA = new FileEntity("0", "A", "2", "700", testOUId, testOGId, 3, FileTypes.NONE,"lol");
 
         when(directoryDao.getChildByName(anyString(), anyString())).thenReturn(dirA, dirB);
         when(fileDao.getChildByName(anyString(), anyString())).thenReturn(fileA);
@@ -79,13 +81,13 @@ public class BrowseServiceTest {
 
     @Test
     void testBrowseDirectory() {
-        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", "1", "1", 12);
-        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", "1", "1", 6);
-        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", "1", "1", 3);
-        FileEntity fileA = new FileEntity("3", "A", "1", "700", "1", "1", 3, FileTypes.NONE,"lol");
-        FileEntity fileB = new FileEntity("4", "B", "1", "700", "1", "1", 3, FileTypes.NONE,"lol");
-        FileEntity fileC = new FileEntity("5", "C", "2", "700", "1", "1", 3, FileTypes.NONE,"lol");
-        FileEntity fileD = new FileEntity("6", "D", "0", "700", "1", "1", 3, FileTypes.NONE,"lol");
+        DirectoryEntity root = new DirectoryEntity("0", "root", null, "000", testOUId, testOGId, 12);
+        DirectoryEntity dirA = new DirectoryEntity("1", "A", "0", "700", testOUId, testOGId, 6);
+        DirectoryEntity dirB = new DirectoryEntity("2", "B", "1", "700", testOUId, testOGId, 3);
+        FileEntity fileA = new FileEntity("3", "A", "1", "700", testOUId, testOGId, 3, FileTypes.NONE,"lol");
+        FileEntity fileB = new FileEntity("4", "B", "1", "700", testOUId, testOGId, 3, FileTypes.NONE,"lol");
+        FileEntity fileC = new FileEntity("5", "C", "2", "700", testOUId, testOGId, 3, FileTypes.NONE,"lol");
+        FileEntity fileD = new FileEntity("6", "D", "0", "700", testOUId, testOGId, 3, FileTypes.NONE,"lol");
 
         List<DirectoryEntity> layer1Dirs = new ArrayList<>();
         List<FileEntity> layer1Files = new ArrayList<>();
