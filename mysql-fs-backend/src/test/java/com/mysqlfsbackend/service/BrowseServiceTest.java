@@ -91,10 +91,10 @@ public class BrowseServiceTest {
         List<FileEntity> layer1Files = new ArrayList<>();
         List<FileEntity> layer2Files = new ArrayList<>();
 
+        layer1Files.add(fileD);
+
         layer1Dirs.add(dirA);
         layer1Dirs.add(dirB);
-
-        layer1Files.add(fileD);
 
         layer2Files.add(fileA);
         layer2Files.add(fileB);
@@ -106,8 +106,8 @@ public class BrowseServiceTest {
         List<List<FileSystemObject>> expected = new ArrayList<>();
         List<FileSystemObject> temp_expected = new ArrayList<>();
         temp_expected.add(dirA);
-        temp_expected.add(dirB);
         temp_expected.add(fileD);
+        temp_expected.add(dirB);
         expected.add(temp_expected);
 
         temp_expected = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.mysqlfsbackend.util;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -35,5 +37,27 @@ public class Algorithm {
         }
 
         return false;
+    }
+
+    public static <T> List<T> merge(List<T> a, List<T> b, Comparator<T> comparator) {
+        List<T> result = new ArrayList<>();
+        int i, j;
+        i = j = 0;
+
+        while (i < a.size() && j < b.size()) {
+            if (comparator.compare(a.get(i), b.get(j)) <= 0) {
+                result.add(a.get(i++));
+            } else {
+                result.add(b.get(j++));
+            }
+        }
+        while (i < a.size()) {
+            result.add(a.get(i++));
+        }
+        while (j < b.size()) {
+            result.add(b.get(j++));
+        }
+
+        return result;
     }
 }

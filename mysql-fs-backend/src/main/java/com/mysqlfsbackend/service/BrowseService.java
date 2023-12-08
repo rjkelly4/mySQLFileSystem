@@ -5,11 +5,13 @@ import com.mysqlfsbackend.model.filesystem.FileEntity;
 import com.mysqlfsbackend.model.filesystem.FileSystemObject;
 import com.mysqlfsbackend.repository.DirectoryDao;
 import com.mysqlfsbackend.repository.FileDao;
+import com.mysqlfsbackend.util.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,7 +112,8 @@ public class BrowseService {
     public List<List<FileSystemObject>> browseDirectory(DirectoryEntity workingDirectory, Integer browseDepth) {
         List<List<FileSystemObject>> browseResults = new ArrayList<>();
 
-        List<String> parentDirIds = new ArrayList<>(Collections.singleton(workingDirectory.getId()));;
+        List<String> parentDirIds = new ArrayList<>(Collections.singleton(workingDirectory.getId()));
+        Comparator<FileSystemObject> parentIdComp = Comparator.comparing(FileSystemObject::getParentDirId);
 
         for (int depth = 0; depth <= browseDepth - 1; ++depth) {
             List<FileSystemObject> childDirectories = directoryDao.getOrderedChildLayer(parentDirIds)
@@ -123,8 +126,7 @@ public class BrowseService {
                     .toList();
 
             browseResults.add(new ArrayList<>());
-            browseResults.get(depth).addAll(childDirectories);
-            browseResults.get(depth).addAll(childFiles);
+            browseResults.get(depth).addAll(Algorithm.merge(childDirectories, childFiles, parentIdComp));
 
             if (childDirectories.isEmpty()) {
                 break;

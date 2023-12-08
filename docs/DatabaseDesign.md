@@ -45,7 +45,7 @@ design as the team works on implementation.
 | Field        | Type         | Null | Key | Default                                             |
 | ------------ | ------------ | ---- | --- | --------------------------------------------------- |
 | id           | binary(36)   | No   | PRI | uuid                                                |
-| name         | varchar(255) | No   |     |                                                     |
+| name         | varchar(255) | No   |     | unique                                              |
 
 #### User
 
@@ -97,7 +97,7 @@ design as the team works on implementation.
 CREATE TABLE UserGroup
 (
     id BINARY(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL
 );
 ```
 
