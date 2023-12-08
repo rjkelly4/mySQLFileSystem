@@ -65,7 +65,7 @@ public class RequestValidator {
      */
     private static boolean isValidDepth(int depth) {
         // Check if depth is within a certain range (for example: between 1 and 5 inclusive)
-        return depth >= 1 && depth <= 5;
+        return depth >= 1 && depth <= 20;
     }
 }
 

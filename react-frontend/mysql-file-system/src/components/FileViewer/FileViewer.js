@@ -10,7 +10,7 @@ const FileViewer = (props) => {
     </Typography>
     <Paper className="surface" variant="outlined">
       { props.displayFile ?
-          <Typography>{props.displayFile.contents}</Typography> :
+          <Typography>{props.displayFile.content}</Typography> :
           <div className="NoFileFoundDisplay">
             <Typography>Select a file to view its contents here.</Typography>
           </div>

@@ -1,10 +1,11 @@
 package com.mysqlfsbackend.controller;
 
-import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import com.mysqlfsbackend.model.dto.http.PostBody;
 import com.mysqlfsbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,20 +19,20 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping(value = {"/test"})
-    public String test(@RequestParam Integer id){
-        return ("All set!" + String.valueOf(id));
+    @PostMapping(value = {"/api/postDirectory"})
+    public ResponseEntity<Object> postDirectory(@RequestBody PostBody postBody) {
+
+        postService.postDirectory(postBody.getId().toString(), postBody.getName(), postBody.getParentId(), postBody.getPermission(),
+                                    postBody.getOwnerUserId(), postBody.getOwnerGroupId(), postBody.getSize());
+        return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
-    @PostMapping(value = {"/post"})
-    public ResponseEntity<Object> postNewDirectory(@RequestParam String name, @RequestParam
-                                                  String parentDirId, @RequestParam int permission,
-                                                  @RequestParam String ownerUserId, @RequestParam String
-                                                  ownerGroupId, @RequestParam int size) {
-        DirectoryEntity newDir = new DirectoryEntity(null, name, parentDirId, permission, ownerUserId, ownerGroupId,
-                size);
+    @PostMapping(value = {"/api/postFile"})
+    public ResponseEntity<Object> postFile(@RequestBody PostBody postBody) {
 
-        postService.postNewDirectory(name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+        postService.postFile(postBody.getId().toString(), postBody.getName(), postBody.getParentId(), postBody.getPermission(),
+                postBody.getOwnerUserId(), postBody.getOwnerGroupId(), postBody.getSize(),
+                postBody.getFileType(), postBody.getContent());
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

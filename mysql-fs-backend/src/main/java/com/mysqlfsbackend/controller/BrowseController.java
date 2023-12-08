@@ -13,7 +13,7 @@ import com.mysqlfsbackend.util.RequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +31,7 @@ public class BrowseController {
         this.browseService = browseService;
     }
 
-    @GetMapping(value = {"/api/browse/folders"})
+    @PostMapping(value = {"/api/browse/folders"})
     public ResponseEntity<ResponseBody<DirectoryDto>> getDirectoryContentFromPath(@RequestParam Optional<String> path,
                                                                     @RequestBody Optional<BrowseRequestBody> requestBody) {
         HttpStatus status;
@@ -70,7 +70,7 @@ public class BrowseController {
         return new ResponseEntity<>(responseBody, status);
     }
 
-    @GetMapping(value = {"/api/browse/files"})
+    @PostMapping(value = {"/api/browse/files"})
     public ResponseEntity<ResponseBody<FileDto>> getFileContentFromPath(@RequestParam String path) {
         HttpStatus status;
         ResponseBody<FileDto> responseBody = new ResponseBody<>();

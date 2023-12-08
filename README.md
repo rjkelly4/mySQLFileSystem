@@ -4,7 +4,7 @@
 
 ### Branch Overview
 
-This branch contains the main (hopefully working and integrated) framework 
+This branch contains the main framework 
 for the backend. The main technologies in the backend stack are Spring boot, 
 Maven, and JPA - all are needed to fully understand the structure of the 
 backend code. This document is designed to clarify some of the questions 

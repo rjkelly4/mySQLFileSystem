@@ -1,5 +1,6 @@
 import { Paper, Modal, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
+const api = require("../../utilities/ApiUtils");
 
 const style = {
   position: 'absolute',
@@ -33,9 +34,12 @@ const NewFolderModal = (props) => {
   }
 
   const handleConfirm = (e) => {
-    alert(`${nameInput} was created in ${props.path}!`);
-    setNameInput("");
-    props.close();
+    api.postDirectory(nameInput, props.parent)
+        .then(() => {
+          setNameInput("");
+          props.close();
+          props.refresh();
+        })
   }
 
   const handleCancel = (e) => {
@@ -46,7 +50,7 @@ const NewFolderModal = (props) => {
   return <Modal open={props.open} onClose={handleCancel} >
     <Paper sx={style}>
       <Typography sx={{paddingBottom: 2}}>{"Create a new folder in:"}</Typography>
-      <Typography sx={{paddingBottom: 2}}>{props.path}</Typography>
+      <Typography sx={{paddingBottom: 2}}>{props.path === "//" ? "/" : props.path}</Typography>
       <TextField label="Name"
                  variant="outlined"
                  value={nameInput}
