@@ -1,7 +1,9 @@
 package com.mysqlfsbackend.repository;
 
 import com.mysqlfsbackend.model.filesystem.FileEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,19 +20,31 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
             nativeQuery = true)
     List<FileEntity> getOrderedChildLayer(@Param("parentDirIds") List<String> parentDirIds);
 
-    @Query(value = "UPDATE File "
-            + "SET f.name = :name, f.parentDir = :parentDirId, f.permission = :permission, "
-            + "f.ownerUserId = :ownerUserId, f.ownerGroupId = :ownerGroupId "
-            + "WHERE f.id = :id",
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO File (id, name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content) "
+            + "VALUES (:id, :name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size, :fileType, :content)",
             nativeQuery = true)
-    String customUpdateById(@Param("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
-                      @Param("permission") int permission, @Param("ownerUserId") int ownerUserId,
-                      @Param("ownerGroupId") int ownerGroupId);
+    void customInsert(@Param("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
+                  @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                  @Param("ownerGroupId") String ownerGroupId, @Param("size") String size,
+                  @Param("fileType") String fileType, @Param("content") String content);
 
-    @Query(value = "INSERT INTO File (id, name, parentDir, permission, ownerUserId, ownerGroupId) "
-            + "VALUES (UUID(), :name, :parentDirId, :permission, :ownerUserId, :ownerGroupId)",
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE File" +
+            " SET parentDirId = :newParentDirId" +
+            " WHERE id = :id",
             nativeQuery = true)
-    String customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                  @Param("permission") int permission, @Param("ownerUserId") int ownerUserId,
-                  @Param("ownerGroupId") int ownerGroupId);
+    void patchParentDir(@Param("newParentDirId") String newParentDirId,
+                      @Param("id") String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE File" +
+            " SET name = :newName" +
+            " WHERE id = :id",
+            nativeQuery = true)
+    void patchName(@Param("newName") String newName,
+                 @Param("id") String id);
 }

@@ -1,19 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import BrowserBar from "../BrowserBar/BrowserBar";
 import TreeViewer from "../TreeViewer/TreeViewer";
 import FileViewer from "../FileViewer/FileViewer";
 import NewFolderModal from "../NewFolderModal/NewFolderModal";
 import NewFileModal from "../NewFileModal/NewFileModal";
 import { Divider, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
-
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-
 import "./BrowserPage.css";
 
-import { testFileTree } from "../../data/testFileTree";
+const api = require('../../utilities/ApiUtils.js');
 
 /*
  * Implementing Shadow Structure:
@@ -49,31 +46,24 @@ const BrowserPage = (props) => {
   const [displayFile, setDisplayFile] = useState(null);
   const [newFolderModalOpen, setNewFolderModalOpen] = useState(false);
   const [newFileModalOpen, setNewFileModalOpen] = useState(false);
+  const [modalParent, setModalParent] = useState("");
 
-  const requestData = (pathname, depth) => {
-    // Get a response from the endpoint using the pathname & depth
-    const database = JSON.parse(JSON.stringify(testFileTree));
-    // Update the current shadow tree
-    let shadowTree = JSON.parse(sessionStorage.getItem("shadowTree"));
-    shadowTree = {...shadowTree, ...database};
-    sessionStorage.setItem("shadowTree", JSON.stringify(shadowTree));
-  }
-
-  const fetchRelevantFiles = () => {
+  const fetchRelevantFiles = async () => {
     // Check for the shadowtree, if it doesn't exist initialize it.
     if (!sessionStorage.getItem("shadowTree")) {
-      sessionStorage.setItem("shadowTree", JSON.stringify({}));
-      requestData("/", 6);
+      const requestedTree = await api.getDirectoryContent("/", 15);
+      requestedTree.name = ""
+      sessionStorage.setItem("shadowTree", JSON.stringify(requestedTree));
     }
 
     // Get the path
     const path = `/${params["*"]}`;
-    console.log(path);
+    // console.log(path);
     setPathInput(path);
     const localTree = JSON.parse(sessionStorage.getItem("shadowTree"));
     const fileNames = path.split("/");
     fileNames.shift();
-    console.log(fileNames)
+    // console.log(fileNames)
 
     setValidPath(true);
 
@@ -84,9 +74,9 @@ const BrowserPage = (props) => {
     columns.push([file]);
 
     for (let fileName of fileNames) {
-      console.log(`File name: ${fileName}`)
+      // console.log(`File name: ${fileName}`)
       // Add the children to the display columns
-      let children = file.children;
+      let children = file.content;
       columns.push(children);
       // If the last element of fileName is "", the path is to a directory
       if (!fileName) {
@@ -101,20 +91,24 @@ const BrowserPage = (props) => {
     }
 
     setFileColumns(columns);
-    console.log(columns);
+    // console.log(columns);
     const activeFileObjects = columns.map(column => column.find(file => file.isActive));
-    console.log("Active file objects:");
-    console.log(activeFileObjects);
+    // console.log("Active file objects:");
+    // console.log(activeFileObjects);
+    
     // If the last item is a file, update the displayFile by sending request to the endpoint.
-    if (activeFileObjects[activeFileObjects.length - 1] &&
-      activeFileObjects[activeFileObjects.length - 1].contents) {
+    if (activeFileObjects[activeFileObjects.length - 1]) { // &&
+      // activeFileObjects[activeFileObjects.length - 1].contents) {
       setDisplayFile(activeFileObjects[activeFileObjects.length - 1]);
     }
     setActiveFiles(activeFileObjects);
-
+    console.log(activeFileObjects[activeFileObjects.length - 2])
+    setModalParent(activeFileObjects[activeFileObjects.length - 2]);
   }
 
-  useEffect(fetchRelevantFiles, [params]);
+  useEffect(() => {
+    fetchRelevantFiles();
+  }, [params]);
 
   /**
    * Updates the pathInput state to reflect changes in the TextInput component of the
@@ -156,6 +150,11 @@ const BrowserPage = (props) => {
     setNewFileModalOpen(false);
   }
 
+  const refresh = () => {
+    sessionStorage.removeItem("shadowTree");
+    // navigate(0);
+  }
+
   /**
    * The JSX to be rendered when a BrowserPage is rendered.
    */
@@ -184,10 +183,14 @@ const BrowserPage = (props) => {
       </SpeedDial>
       <NewFolderModal open={newFolderModalOpen}
                       close={handleNewFolderModalClose}
-                      path={`/${params["*"].split("/").slice(0, -1).join("/")}/`}/>
+                      path={`/${params["*"].split("/").slice(0, -1).join("/")}/`}
+                      parent={modalParent}
+                      refresh={refresh}/>
       <NewFileModal open={newFileModalOpen}
                     close={handleNewFileModalClose}
-                    path={`/${params["*"].split("/").slice(0, -1).join("/")}/`}/>
+                    path={`/${params["*"].split("/").slice(0, -1).join("/")}/`}
+                    parent={modalParent}
+                    refresh={refresh}/>
     </div>
   )
 }

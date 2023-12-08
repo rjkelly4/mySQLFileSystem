@@ -1,7 +1,9 @@
 package com.mysqlfsbackend.repository;
 
 import com.mysqlfsbackend.model.filesystem.DirectoryEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,19 +24,30 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             nativeQuery = true)
     List<DirectoryEntity> getOrderedChildLayer(@Param("parentDirIds") List<String> parentDirIds);
 
-    @Query(value = "UPDATE directories "
-            + "SET d.name = :name, d.parentDir = :parentDirId, d.permission = :permission, "
-            + "d.ownerUserId = :ownerUserId, d.ownerGroupId = :ownerGroupId "
-            + "where d.id = :id",
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO Directory (id, name, parentDirId, permission, ownerUserId, ownerGroupId, size) "
+            + "VALUES (:id, :name, :parentDirId, :permission, :ownerUserId, :ownerGroupId, :size);",
             nativeQuery = true)
-    String customUpdateById(@Param("id") String id, @Param("name") String name,
-                            @Param("parentDirId") String parentDirId, @Param("permission") Integer permission,
-                            @Param("ownerUserId") Integer ownerUserId, @Param("ownerGroupId") Integer ownerGroupId);
+    void customInsert(@Param("id") String id, @Param("name") String name, @Param("parentDirId") String parentDirId,
+                        @Param("permission") String permission, @Param("ownerUserId") String ownerUserId,
+                        @Param("ownerGroupId") String ownerGroupId, @Param("size") String size);
 
-    @Query(value = "INSERT INTO directories (id, name, parentDir, permission, ownerUserId, ownerGroupId) "
-            + "VALUES (UUID(), :name, :parentDirId, :permission, :ownerUserId, :ownerGroupId);",
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Directory" +
+            " SET parentDirId = :newParentDirId" +
+            " WHERE id = :id",
             nativeQuery = true)
-    String customInsert(@Param("name") String name, @Param("parentDirId") String parentDirId,
-                        @Param("permission") Integer permission, @Param("ownerUserId") Integer ownerUserId,
-                        @Param("ownerGroupId") Integer ownerGroupId);
+    void patchParentDir(@Param("newParentDirId") String newParentDirId,
+                      @Param("id") String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Directory" +
+            " SET name = :newName" +
+            " WHERE id = :id",
+            nativeQuery = true)
+    void patchName(@Param("newName") String newName,
+                      @Param("id") String id);
 }

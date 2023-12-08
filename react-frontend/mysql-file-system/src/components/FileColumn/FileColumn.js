@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import FileButton from "../FileButton/FileButton";
@@ -6,7 +5,6 @@ import FileButton from "../FileButton/FileButton";
 import "./FileColumn.css";
 
 const FileColumn = (props) => {
-
   if (props.files.length === 0) {
     return (
       <Typography sx={{textOrientation: 'sideways',
@@ -23,7 +21,8 @@ const FileColumn = (props) => {
                   spacing={1}>
         {props.files.map((file) =>
           <FileButton file={file}
-                      path={props.parentPath + file.name + (file.children && file.name ? "/" : "")} />
+                      path={props.parentPath + file.name + (file.children && file.name ? "/" : "")}
+                      key={file.id + (file.isDirectory ? "D" : "F")}/>
         )}
       </Stack>
     )

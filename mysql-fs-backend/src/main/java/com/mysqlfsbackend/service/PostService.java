@@ -19,12 +19,17 @@ public class PostService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void postNewDirectory(String name, String parentDirId,
-                                        int permission, String ownerUserId,
-                                        String ownerGroupId, int size) {
+    public void postDirectory(String id, String name, String parentDirId,
+                                        String permission, String ownerUserId,
+                                        String ownerGroupId, String size) {
 
-        jdbcTemplate.update("INSERT INTO Directory (name, parentDirId, permission, ownerUserId, ownerGroupId, size) "
-                        + "VALUES (?, ?, ?, ?, ?, ?);", name, parentDirId, permission, ownerUserId, ownerGroupId, size);
-        ;
+        directoryDao.customInsert(id, name, parentDirId, permission, ownerUserId, ownerGroupId, size);
+    }
+
+    public void postFile(String id, String name, String parentDirId,
+                              String permission, String ownerUserId,
+                              String ownerGroupId, String size, String fileType, String content) {
+
+        fileDao.customInsert(id, name, parentDirId, permission, ownerUserId, ownerGroupId, size, fileType, content);
     }
 }
