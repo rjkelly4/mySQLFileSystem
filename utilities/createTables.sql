@@ -1,10 +1,12 @@
-CREATE TABLE UserGroup
+USE SQLFSDev;
+
+CREATE TABLE `UserGroup`
 (
     id BINARY(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE User
+CREATE TABLE `User`
 (
     id BINARY(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -15,14 +17,15 @@ CREATE TABLE User
     FOREIGN KEY (groupId) REFERENCES UserGroup(id)
 );
 
-CREATE TABLE UserThirdParty (
+CREATE TABLE `UserThirdParty`
+(
     thirdPartyId VARCHAR(255) PRIMARY KEY,
     userId BINARY(36) UNIQUE NOT NULL,
     FOREIGN KEY (userId) REFERENCES User(id),
     INDEX (userId)
 );
 
-CREATE TABLE Directory
+CREATE TABLE `Directory`
 (
     id BINARY(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -36,7 +39,7 @@ CREATE TABLE Directory
     FOREIGN KEY (ownerGroupId) REFERENCES UserGroup(id)
 );
 
-CREATE TABLE File
+CREATE TABLE `File`
 (
     id BINARY(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
