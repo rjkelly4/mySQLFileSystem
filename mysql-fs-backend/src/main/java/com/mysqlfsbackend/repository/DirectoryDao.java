@@ -50,4 +50,10 @@ public interface DirectoryDao extends JpaRepository<DirectoryEntity, String> {
             nativeQuery = true)
     void patchName(@Param("newName") String newName,
                       @Param("id") String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM Directory WHERE id = :id",
+            nativeQuery = true)
+    void delete(@Param("id") String id);
 }
