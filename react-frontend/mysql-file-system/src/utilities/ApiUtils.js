@@ -88,7 +88,7 @@ export const getFileContent = async (path) => {
 // Delete Functions //
 //////////////////////
 
-export const deleteDirectory = async (id, dirName, parentDirId) => {
+export const deleteDirectory = async (id) => {
     const endpoint = `${api}/deleteDirectory`;
     const request = {
         method: 'DELETE',
@@ -96,21 +96,16 @@ export const deleteDirectory = async (id, dirName, parentDirId) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,
-            name: dirName,
-            parentDirId: parentDirId
+            id: id
         })
     }
 
     const response = await fetch(endpoint, request);
-    const data = (await response.json()).payload;
 
-    // TODO: Filter data before returning
-
-    return data;
+    return response;
 }
 
-export const deleteFile = async (id, fileName, parentDirId) => {
+export const deleteFile = async (id) => {
     const endpoint = `${api}/deleteFile`;
     const request = {
         method: 'DELETE',
@@ -118,18 +113,12 @@ export const deleteFile = async (id, fileName, parentDirId) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,
-            name: fileName,
-            parentDirId: parentDirId
+            id: id
         })
     }
 
     const response = await fetch(endpoint, request);
-    const data = (await response.json()).payload;
-
-    // TODO: Filter data before returning
-
-    return data;
+    return response;
 }
 
 /////////////////////

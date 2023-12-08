@@ -10,22 +10,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class DeleteService {
     private final DirectoryDao directoryDao;
     private final FileDao fileDao;
-    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public DeleteService(DirectoryDao directoryDao, FileDao fileDao, JdbcTemplate jdbcTemplate) {
+    public DeleteService(DirectoryDao directoryDao, FileDao fileDao) {
         this.directoryDao = directoryDao;
         this.fileDao = fileDao;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void deleteDirectory(String id) {
-        jdbcTemplate.update("DELETE FROM Directory WHERE id = ?;",
-                id);
+        directoryDao.delete(id);
     }
 
     public void deleteFile(String id) {
-        jdbcTemplate.update("DELETE FROM File WHERE id = ?;",
-                id);
+        fileDao.delete(id);
     }
 }

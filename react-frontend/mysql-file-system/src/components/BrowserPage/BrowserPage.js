@@ -8,6 +8,7 @@ import NewFileModal from "../NewFileModal/NewFileModal";
 import { Divider, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
 import "./BrowserPage.css";
 
 const api = require('../../utilities/ApiUtils.js');
@@ -152,7 +153,18 @@ const BrowserPage = (props) => {
 
   const refresh = () => {
     sessionStorage.removeItem("shadowTree");
-    // navigate(0);
+    const navigatePath = `/browse${activeFiles.slice(0, activeFiles.length - 1).map(file => file.name).join("/")}/`
+    navigate(navigatePath);
+  }
+
+  const deleteCurrentFolder = () => {
+    console.log(activeFiles[activeFiles.length - 2].id);
+    api.deleteDirectory(activeFiles[activeFiles.length - 2].id)
+        .then(() => {
+          sessionStorage.removeItem("shadowTree");
+          const navigatePath = `/browse${activeFiles.slice(0, activeFiles.length - 2).map(file => file.name).join("/")}/`
+          navigate(navigatePath);
+        })
   }
 
   /**
@@ -167,8 +179,9 @@ const BrowserPage = (props) => {
       <div className="ViewPort">
         <TreeViewer validPath={validPath}
                     fileColumns={fileColumns}
-                    activeFiles={activeFiles}/>
-        <FileViewer displayFile={displayFile} />
+                    activeFiles={activeFiles} />
+        <FileViewer displayFile={displayFile}
+                    reset={() => {setDisplayFile(null)}} />
       </div>
       <SpeedDial ariaLabel="SpeedDial Add Item"
                  className="SpeedDialAdder"
@@ -180,6 +193,9 @@ const BrowserPage = (props) => {
         <SpeedDialAction icon={<NoteAddIcon />}
                          tooltipTitle="New File"
                          onClick={handleNewFileModalOpen}/>
+        <SpeedDialAction icon={<FolderDeleteIcon color="error" />}
+                         tooltipTitle="Delete Current Folder"
+                         onClick={deleteCurrentFolder} />
       </SpeedDial>
       <NewFolderModal open={newFolderModalOpen}
                       close={handleNewFolderModalClose}

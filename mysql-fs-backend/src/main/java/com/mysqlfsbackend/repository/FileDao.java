@@ -47,4 +47,10 @@ public interface FileDao extends JpaRepository<FileEntity, String> {
             nativeQuery = true)
     void patchName(@Param("newName") String newName,
                  @Param("id") String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM File WHERE id = :id",
+            nativeQuery = true)
+    void delete(@Param("id") String id);
 }
